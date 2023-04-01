@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Seeders\room\AreaSeeder;
+use Database\Seeders\room\EquipmentSeeder;
+use Database\Seeders\room\ExtraServiceSeeder;
 use Database\Seeders\room\FloorSeeder;
+use Database\Seeders\room\RoomTypeSeeder;
 use Database\Seeders\user\AccountSeeder;
 use Database\Seeders\user\AdminSeeder;
 use Database\Seeders\user\EmployeeSeeder;
@@ -36,5 +39,8 @@ class DatabaseSeeder extends Seeder
         $this->call(BlogSeeder::class);
         $this->call(AreaSeeder::class);
         $this->call(FloorSeeder::class);
+        $this->call(EquipmentSeeder::class);
+        $this->call(RoomTypeSeeder::class);
+        $this->call(ExtraServiceSeeder::class);
     }
 }

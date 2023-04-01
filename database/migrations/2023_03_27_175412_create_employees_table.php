@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('name_bank');
             $table->dateTime('day_start');
             $table->dateTime('day_quit');
-            $table->binary('image')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('status');
             $table->foreignId('account_id')->constrained('accounts')->onUpdate('cascade');
             $table->foreignId('department_id')->constrained('departments')->onUpdate('cascade');

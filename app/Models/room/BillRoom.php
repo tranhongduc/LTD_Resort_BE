@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Models\room;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class BillRoom extends Model
+{
+    use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'total_amount',
+        'total_room',
+        'total_people',
+        'payment_method',
+        'pay_time',
+        'checkout_time',
+        'cancel_time',
+        'tax',
+        'discount',
+        'customer_id',
+        'employee_id',
+    ];
+}

@@ -15,16 +15,16 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
-        $accountModel = new Account();
-        $employeeAccounts = $accountModel->newQuery()->where('account_type', '=', 'EMPLOYEE')->get();
+        $account_model = new Account();
+        $employee_accounts = $account_model->newQuery()->where('account_type', '=', 'EMPLOYEE')->get();
 
-        $departmentModel = new Department();
-        $listDepartments = $departmentModel->newQuery()->get('id');
+        $department_model = new Department();
+        $list_departments = $department_model->newQuery()->get('id');
 
-        for ($i = 0; $i < count($employeeAccounts); $i++) {
+        for ($i = 0; $i < count($employee_accounts); $i++) {
             Employee::factory()->create([
-                'account_id' => $employeeAccounts[$i]->id,
-                'department_id' => fake()->randomElement($listDepartments),
+                'account_id' => $employee_accounts[$i]->id,
+                'department_id' => fake()->randomElement($list_departments),
             ]);
         }
     }

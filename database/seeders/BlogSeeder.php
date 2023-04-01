@@ -14,12 +14,12 @@ class BlogSeeder extends Seeder
      */
     public function run(): void
     {
-        $employeeModel = new Employee();
-        $listEmployees = $employeeModel->newQuery()->get();
+        $employee_model = new Employee();
+        $list_employees = $employee_model->newQuery()->get();
 
-        for ($i = 0; $i < count($listEmployees); $i++) {
+        for ($i = 0; $i < count($list_employees); $i++) {
             Blog::factory(5)->create([
-                'employee_id' => $listEmployees[$i]->id
+                'employee_id' => $list_employees[$i]->id
             ]);
         }
     }

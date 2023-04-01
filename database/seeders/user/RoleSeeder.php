@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminRoles = [
+        $admin_roles = [
             'Tổng giám đốc', 'Phó Tổng giám đốc', 'Giám đốc bộ phận khách hàng',
             'Giám đốc bộ phận lễ tân', 'Giám đốc Buồng phòng', 'Giám đốc bộ phận ẩm thực',
             'Giám đốc kinh doanh', 'Giám đốc tài chính, kế toán', 'Giám đốc bộ phận hành chính - nhân sự',
@@ -25,7 +25,7 @@ class RoleSeeder extends Seeder
             'Bếp trưởng bộ phận', 'Bếp phó', 'Bếp trưởng điều hành'
         ];
 
-        $employeeRoles = [
+        $employee_roles = [
             'Nhân viên lễ  tân', 'Nhân viên thu ngân', 'Nhân viên đặt phòng',
             'Nhân viên chăm sóc khách hàng', 'Nhân viên tiền sảnh', 'Nhân viên hỗ trợ khách hàng',
             'Nhân viên làm phòng', 'Nhân viên giặt là', 'Nhân viên trông trẻ',
@@ -40,27 +40,27 @@ class RoleSeeder extends Seeder
             'Nhân viên lương/ bảo hiểm', 'Nhân viên pháp lý', 'Nhân viên cứu hộ'
         ];
 
-        $customerRoles = [
+        $customer_roles = [
             'Khách hàng', 'Khách hàng ưu đãi', 'Khách hàng VIP'
         ];
 
-        for ($i = 0; $i < count($adminRoles); $i++) {
+        for ($i = 0; $i < count($admin_roles); $i++) {
             Role::factory()->create([
-                'role_name' => $adminRoles[$i],
+                'role_name' => $admin_roles[$i],
                 'role_type' => 'ROLE_ADMIN',
             ]);
         }
 
-        for ($i = 0; $i < count($employeeRoles); $i++) {
+        for ($i = 0; $i < count($employee_roles); $i++) {
             Role::factory()->create([
-                'role_name' => $employeeRoles[$i],
+                'role_name' => $employee_roles[$i],
                 'role_type' => 'ROLE_EMPLOYEE',
             ]);
         }
 
-        for ($i = 0; $i < count($customerRoles); $i++) {
+        for ($i = 0; $i < count($customer_roles); $i++) {
             Role::factory()->create([
-                'role_name' => $customerRoles[$i],
+                'role_name' => $customer_roles[$i],
                 'role_type' => 'ROLE_CUSTOMER',
             ]);
         }

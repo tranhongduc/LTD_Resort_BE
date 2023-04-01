@@ -14,12 +14,12 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        $accountModel = new Account();
-        $adminAccounts = $accountModel->newQuery()->where('account_type', '=', 'ADMIN')->get();
+        $account_model = new Account();
+        $admin_accounts = $account_model->newQuery()->where('account_type', '=', 'ADMIN')->get();
 
-        for ($i = 0; $i < count($adminAccounts); $i++) {
+        for ($i = 0; $i < count($admin_accounts); $i++) {
             Admin::factory()->create([
-                'account_id' => $adminAccounts[$i]->id
+                'account_id' => $admin_accounts[$i]->id
             ]);
         }
     }

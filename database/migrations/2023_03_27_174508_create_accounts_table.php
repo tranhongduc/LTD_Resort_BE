@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('username', 50)->unique();
             $table->string('password');
-            $table->binary('avatar')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('account_type');
             $table->boolean('enabled');
             $table->foreignId('role_id')->constrained('roles')->onUpdate('cascade');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->boolean('status');
+            $table->string('image')->nullable();
             $table->timestamps();
             $table->foreignId('employee_id')->constrained('employees')->onUpdate('cascade');
         });

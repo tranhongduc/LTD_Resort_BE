@@ -14,10 +14,10 @@ class AccountSeeder extends Seeder
      */
     public function run(): void
     {
-        $roleModel = new Role();
-        $adminRoles = $roleModel->newQuery()->where('role_type', '=', 'ROLE_ADMIN')->get(['id']);
-        $employeeRoles = $roleModel->newQuery()->where('role_type', '=', 'ROLE_EMPLOYEE')->get(['id']);
-        $customerRoles = $roleModel->newQuery()->where('role_type', '=', 'ROLE_CUSTOMER')->get(['id']);
+        $role_model = new Role();
+        $admin_roles = $role_model->newQuery()->where('role_type', '=', 'ROLE_ADMIN')->get(['id']);
+        $employee_roles = $role_model->newQuery()->where('role_type', '=', 'ROLE_EMPLOYEE')->get(['id']);
+        $customer_roles = $role_model->newQuery()->where('role_type', '=', 'ROLE_CUSTOMER')->get(['id']);
 
         define('TOTAL_ACCOUNT', 20);
 
@@ -25,11 +25,11 @@ class AccountSeeder extends Seeder
             $account_type = fake()->randomElement(['ADMIN', 'EMPLOYEE', 'CUSTOMER']);
             $role_id = 0;
             if ($account_type == 'ADMIN') {
-                $role_id = fake()->randomElement($adminRoles);
+                $role_id = fake()->randomElement($admin_roles);
             } else if ($account_type == 'EMPLOYEE') {
-                $role_id = fake()->randomElement($employeeRoles);
+                $role_id = fake()->randomElement($employee_roles);
             } else {
-                $role_id = fake()->randomElement($customerRoles);
+                $role_id = fake()->randomElement($customer_roles);
             }
 
             Account::factory()->create([
