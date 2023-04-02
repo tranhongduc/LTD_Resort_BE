@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedbacks', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->date('date_request');
-            $table->date('date_response');
+            $table->dateTime('date_request');
+            $table->dateTime('date_response');
             $table->string('feedback_type');
             $table->string('image')->nullable();
             $table->integer('rating');
             $table->string('title')->nullable();
             $table->string('comment')->nullable();
             $table->string('feedback_status');
-            $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade');
-            $table->foreignId('employee_id')->constrained('employees')->onUpdate('cascade');
+            $table->foreignId('customer_id')->constrained('customers');
+            $table->foreignId('employee_id')->constrained('employees');
             $table->timestamps();
         });
     }

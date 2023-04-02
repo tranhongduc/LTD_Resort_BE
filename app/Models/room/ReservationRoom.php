@@ -9,6 +9,13 @@ class ReservationRoom extends Model
 {
     use HasFactory;
 
+    /**s
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'reservation_rooms';
+
     /**
      * The attributes that are mass assignable.
      *

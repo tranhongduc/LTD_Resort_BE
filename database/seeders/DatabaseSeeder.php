@@ -7,7 +7,10 @@ use Database\Seeders\room\AreaSeeder;
 use Database\Seeders\room\EquipmentSeeder;
 use Database\Seeders\room\ExtraServiceSeeder;
 use Database\Seeders\room\FloorSeeder;
+use Database\Seeders\room\RoomSeeder;
 use Database\Seeders\room\RoomTypeSeeder;
+use Database\Seeders\service\ServiceSeeder;
+use Database\Seeders\service\ServiceTypeSeeder;
 use Database\Seeders\user\AccountSeeder;
 use Database\Seeders\user\AdminSeeder;
 use Database\Seeders\user\EmployeeSeeder;
@@ -42,5 +45,9 @@ class DatabaseSeeder extends Seeder
         $this->call(EquipmentSeeder::class);
         $this->call(RoomTypeSeeder::class);
         $this->call(ExtraServiceSeeder::class);
+        $this->call(FeedbackSeeder::class);
+        $this->call(ServiceTypeSeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(RoomSeeder::class);
     }
 }

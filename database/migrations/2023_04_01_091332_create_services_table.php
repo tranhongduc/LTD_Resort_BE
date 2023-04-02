@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('status');
             $table->float('price');
             $table->integer('point_ranking');
-            $table->foreignId('feedback_id')->constrained('feedbacks')->onUpdate('cascade');
+            $table->foreignId('feedback_id')->constrained('feedback')->onUpdate('cascade');
             $table->foreignId('service_type_id')->constrained('service_types')->onUpdate('cascade');
             $table->timestamps();
         });

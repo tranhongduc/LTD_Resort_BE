@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class BillRoomDetail extends Model
 {
     use HasFactory;
+    
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'bill_room_details';
 
     /**
      * The attributes that are mass assignable.

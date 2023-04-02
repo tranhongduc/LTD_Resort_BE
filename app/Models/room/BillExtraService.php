@@ -10,6 +10,13 @@ class BillExtraService extends Model
     use HasFactory;
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'bill_extra_services';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

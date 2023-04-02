@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('room_name');
             $table->string('status');
-            $table->foreignId('feedback_id')->constrained('feedbacks')->onUpdate('cascade');
+            $table->foreignId('feedback_id')->constrained('feedback')->onUpdate('cascade');
             $table->foreignId('area_id')->constrained('areas')->onUpdate('cascade');
             $table->foreignId('floor_id')->constrained('floors')->onUpdate('cascade');
             $table->foreignId('room_type_id')->constrained('room_types')->onUpdate('cascade');
