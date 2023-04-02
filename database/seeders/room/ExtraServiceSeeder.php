@@ -20,24 +20,6 @@ class ExtraServiceSeeder extends Seeder
             'Nước cam Twister', 'Trà xanh không độ', 'Nước suối' 
         ];
 
-        $bedroom_types = [
-            
-        ];
-
-        $room_types = ['Superior Room', 'Deluxe Room', 'Executive Room', 'Suite Room'];
-
-        $bedroom_types_price = [200000, 240000, 250000, 300000, 400000];
-        $room_types_price = [1.2, 1.4, 1.5, 2.5, 3];
-
-        $room_types_price = [1.2, 1.4, 1.5, 2.5, 3];
-
-        $room_sizes = [20, 25, 30, 35, 40];
-
-        $number_rooms = [50, 40, 45, 30, 20];
-        $number_customers = [1, 2, 2, 3, 4];
-
-        $list_point_rankings = [200, 250, 300, 350, 400];
-
         for ($i = 0; $i < count($extra_services_name); $i++) {
             ExtraService::factory()->create([
                 'extra_service_name' => $extra_services_name[$i],
