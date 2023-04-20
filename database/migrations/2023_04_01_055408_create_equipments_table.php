@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('description');
             $table->float('price');
             $table->integer('number');
+            $table->boolean('status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

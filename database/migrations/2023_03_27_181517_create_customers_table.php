@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone')->unique();
             $table->integer('ranking_point');
-            $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
-            $table->foreignId('ranking_id')->constrained('rankings')->onUpdate('cascade');
+            $table->foreignId('account_id')->constrained('accounts');
+            $table->foreignId('ranking_id')->constrained('rankings');
             $table->timestamps();
         });
     }

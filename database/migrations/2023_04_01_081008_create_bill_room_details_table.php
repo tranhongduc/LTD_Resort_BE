@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('bill_room_details', function (Blueprint $table) {
             $table->id();
             $table->integer('total_people');
-            $table->foreignId('bill_room_id')->constrained('bill_rooms')->onUpdate('cascade');
-            $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade');
+            $table->foreignId('bill_room_id')->constrained('bill_rooms');
+            $table->foreignId('room_id')->constrained('rooms');
             $table->timestamps();
         });
     }

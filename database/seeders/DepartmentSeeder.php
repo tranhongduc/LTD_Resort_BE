@@ -16,7 +16,6 @@ class DepartmentSeeder extends Seeder
         $department_names = [
             'Bộ phận Tiền sảnh', 'Bộ phận Buồng phòng', 'Bộ phận Ẩm thực', 'Bộ phận Kinh doanh - Tiếp thị',
             'Bộ phận Tài chính - Kế toán', 'Bộ phận Hành chính - Nhân sự', 'Bộ phận Kỹ thuật', 
-            'Bộ phận Bếp', 'Bộ phận khác'
         ];
 
         for ($i = 0; $i < count($department_names); $i++) { 

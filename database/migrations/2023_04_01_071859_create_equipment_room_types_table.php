@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('equipment_room_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_type_id')->constrained('room_types')->onUpdate('cascade');
-            $table->foreignId('equipment_id')->constrained('equipments')->onUpdate('cascade');
+            $table->foreignId('room_type_id')->constrained('room_types');
+            $table->foreignId('equipment_id')->constrained('equipments');
             $table->timestamps();
         });
     }

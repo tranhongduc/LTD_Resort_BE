@@ -2,6 +2,7 @@
 
 namespace Database\Seeders\user;
 
+use App\Models\Position;
 use App\Models\user\Account;
 use App\Models\user\Admin;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,11 +16,15 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $account_model = new Account();
-        $admin_accounts = $account_model->newQuery()->where('account_type', '=', 'ADMIN')->get();
+        $admin_accounts = $account_model->newQuery()->join('roles', 'accounts.role_id', '=', 'roles.id')->where('role_name', '=', 'ROLE_ADMIN')->get(['accounts.id']);
+        
+        $position_model = new Position();
+        $list_positions = $position_model->newQuery()->get('id');
 
         for ($i = 0; $i < count($admin_accounts); $i++) {
             Admin::factory()->create([
-                'account_id' => $admin_accounts[$i]->id
+                'account_id' => $admin_accounts[$i]->id,
+                'position_id' => fake()->randomElement($list_positions),
             ]);
         }
     }

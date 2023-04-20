@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('image')->nullable();
             $table->boolean('status');
-            $table->foreignId('account_id')->constrained('accounts')->onDelete('cascade');
+            $table->foreignId('account_id')->constrained('accounts');
+            $table->foreignId('position_id')->constrained('positions');
             $table->timestamps();
         });
     }
