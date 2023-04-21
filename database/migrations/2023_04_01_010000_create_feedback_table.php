@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->integer('rating');
             $table->string('title')->nullable();
-            $table->string('comment')->nullable();
+            $table->text('comment')->nullable();
             $table->string('feedback_status');
             $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('employee_id')->constrained('employees');

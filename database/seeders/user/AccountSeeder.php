@@ -6,6 +6,7 @@ use App\Models\user\Account;
 use App\Models\user\Role;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AccountSeeder extends Seeder
 {
@@ -19,8 +20,9 @@ class AccountSeeder extends Seeder
             Account::factory()->create([
                 'username' => fake()->userName(),
                 'email' => fake()->safeEmail(),
-                'password' => fake()->password(),
+                'password' => Hash::make('123'),
                 'avatar' => fake()->imageUrl(),
+                'enabled' => fake()->boolean(95),
                 'role_id' => fake()->randomElement([1, 2, 3]),
             ]);
         }
