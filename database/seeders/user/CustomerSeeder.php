@@ -16,7 +16,7 @@ class CustomerSeeder extends Seeder
     public function run(): void
     {
         $account_model = new Account();
-        $customer_accounts = $account_model->newQuery()->where('account_type', '=', 'CUSTOMER')->get();
+        $customer_accounts = $account_model->newQuery()->where('role_id', '=', '3')->get();
 
         $ranking_model = new Ranking();
         $list_rankings = $ranking_model->newQuery()->get('id');

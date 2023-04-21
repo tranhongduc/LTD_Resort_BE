@@ -16,7 +16,7 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         $account_model = new Account();
-        $employee_accounts = $account_model->newQuery()->where('account_type', '=', 'EMPLOYEE')->get();
+        $employee_accounts = $account_model->newQuery()->where('role_id', '=', '2')->get();
 
         $department_model = new Department();
         $list_departments = $department_model->newQuery()->get('id');

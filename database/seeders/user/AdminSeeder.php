@@ -15,7 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $account_model = new Account();
-        $admin_accounts = $account_model->newQuery()->where('account_type', '=', 'ADMIN')->get();
+        $admin_accounts = $account_model->newQuery()->where('role_id', '=', '1')->get();
 
         for ($i = 0; $i < count($admin_accounts); $i++) {
             Admin::factory()->create([

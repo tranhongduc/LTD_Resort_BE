@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('gender');
             $table->date('birthday');
-            $table->string('email')->unique();
             $table->string('CMND')->unique();
             $table->string('address');
             $table->string('phone')->unique();
@@ -26,8 +25,8 @@ return new class extends Migration
             $table->dateTime('day_quit');
             $table->string('image')->nullable();
             $table->boolean('status');
-            $table->foreignId('account_id')->constrained('accounts')->onUpdate('cascade');
-            $table->foreignId('department_id')->constrained('departments')->onUpdate('cascade');
+            $table->foreignId('account_id')->constrained('accounts')->onUpdate('cascade')->nullable();
+            $table->foreignId('position_id')->constrained('positions')->onUpdate('cascade');
             $table->timestamps();
         });
     }
