@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('equipment_rooms', function (Blueprint $table) {
             $table->id();
             $table->string('status');
-            $table->foreignId('equipment_type_id')->constrained('equipment_room_types')->onUpdate('cascade');
-            $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade');
+            $table->foreignId('equipment_type_id')->constrained('equipment_room_types');
+            $table->foreignId('room_id')->constrained('rooms');
             $table->timestamps();
         });
     }

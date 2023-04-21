@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RankingSeeder::class);
         $this->call(AccountSeeder::class);
         $this->call(DepartmentSeeder::class);
+        $this->call(PositionSeeder::class);
         $this->call(EmployeeSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(CustomerSeeder::class);

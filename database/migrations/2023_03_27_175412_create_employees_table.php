@@ -25,9 +25,10 @@ return new class extends Migration
             $table->dateTime('day_quit');
             $table->string('image')->nullable();
             $table->boolean('status');
-            $table->foreignId('account_id')->constrained('accounts')->onUpdate('cascade')->nullable();
-            $table->foreignId('position_id')->constrained('positions')->onUpdate('cascade');
+            $table->foreignId('account_id')->constrained('accounts');
+            $table->foreignId('position_id')->constrained('positions');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('full_name');
             $table->string('phone');
-            $table->foreignId('bill_room_detail_id')->constrained('bill_room_details')->onUpdate('cascade');
+            $table->foreignId('bill_room_detail_id')->constrained('bill_room_details');
             $table->timestamps();
         });
     }

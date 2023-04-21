@@ -16,8 +16,8 @@ return new class extends Migration
             $table->date('time_start');
             $table->date('time_end');
             $table->string('status');
-            $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade');
-            $table->foreignId('bill_room_id')->constrained('bill_rooms')->onUpdate('cascade');
+            $table->foreignId('room_id')->constrained('rooms');
+            $table->foreignId('bill_room_id')->constrained('bill_rooms');
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('payment_method');
             $table->float('tax');
             $table->float('discount');
-            $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade');
-            $table->foreignId('employee_id')->constrained('employees')->onUpdate('cascade');
+            $table->foreignId('customer_id')->constrained('customers');
+            $table->foreignId('employee_id')->constrained('employees');
             $table->timestamps();
         });
     }

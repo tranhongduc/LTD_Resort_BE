@@ -18,7 +18,8 @@ return new class extends Migration
             $table->boolean('status');
             $table->string('image')->nullable();
             $table->timestamps();
-            $table->foreignId('employee_id')->constrained('employees')->onUpdate('cascade');
+            $table->foreignId('employee_id')->constrained('employees');
+            $table->softDeletes();
         });
     }
 

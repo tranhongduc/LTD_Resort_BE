@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('username', 50);
             $table->string('email')->unique();
             $table->string('password');
             $table->string('avatar')->nullable();
-            $table->foreignId('role_id')->constrained('roles')->onUpdate('cascade');
+            $table->boolean('enabled');
+            $table->foreignId('role_id')->constrained('roles');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

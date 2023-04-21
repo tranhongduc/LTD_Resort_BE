@@ -20,7 +20,8 @@ class EquipmentFactory extends Factory
             'image' => fake()->imageUrl(),
             'description' => fake()->sentence(),
             'price' => 50000,
-            'number' => 10
+            'number' => 10,
+            'status' => true,
         ];
     }
 }

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->float('amount');
             $table->integer('quantity');
-            $table->foreignId('service_id')->constrained('services')->onUpdate('cascade');
-            $table->foreignId('bill_service_id')->constrained('bill_services')->onUpdate('cascade');
+            $table->foreignId('service_id')->constrained('services');
+            $table->foreignId('bill_service_id')->constrained('bill_services');
             $table->timestamps();
         });
     }
