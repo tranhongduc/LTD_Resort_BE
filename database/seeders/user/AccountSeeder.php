@@ -15,7 +15,6 @@ class AccountSeeder extends Seeder
     public function run(): void
     {
         define('TOTAL_ACCOUNT', 20);
-
         for ($i = 0; $i < TOTAL_ACCOUNT; $i++) {
             Account::factory()->create([
                 'username' => fake()->userName(),

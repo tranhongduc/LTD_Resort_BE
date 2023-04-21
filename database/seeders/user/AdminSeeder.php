@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
         
         $position_model = new Position();
         $list_positions = $position_model->newQuery()->get('id');
-
+        
         for ($i = 0; $i < count($admin_accounts); $i++) {
             Admin::factory()->create([
                 'account_id' => $admin_accounts[$i]->id,
