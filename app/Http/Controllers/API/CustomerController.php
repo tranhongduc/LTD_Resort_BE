@@ -5,12 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\user\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *  @return \Illuminate\Http\Response
      */
     public function index()
     {
