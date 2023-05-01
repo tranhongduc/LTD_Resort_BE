@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use DB;
 
 class AuthController extends Controller
 {
@@ -144,12 +144,15 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        // $role_user = DB::table('roles')->where('id', '=', auth()->user()->role_id)->get('role_name');
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'message' => 'Login successfully!',
             'expires_in' => auth()->factory()->getTTL() * 60,
             'user' => auth()->user(),
+            // 'role_user' => $role_user,
         ]);
     }
 }
