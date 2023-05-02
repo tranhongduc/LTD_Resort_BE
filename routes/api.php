@@ -42,6 +42,7 @@ Route::get('/list-services', [ServiceController::class, 'index']);
 Route::get('/service/{id}', [ServiceController::class, 'show']);
 Route::get('/lowest-price-service', [ServiceController::class, 'getLowestPrice']);
 Route::get('/highest-price-service', [ServiceController::class, 'getHighestPrice']);
+Route::post('/filter-service', [ServiceController::class, 'filterService']);
 
 // Account
 Route::get('accounts', [AccountController::class, 'index']);

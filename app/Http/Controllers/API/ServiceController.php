@@ -36,7 +36,45 @@ class ServiceController extends Controller
     }
 
     public function filterService(Request $request) {
-        
+        $price = $request->price;
+        $services = $request->input('services');
+
+        $list_filter_services = [];
+
+        if ($price != 0) {
+            if (count($services) != 0) {
+                $list_filter_services = DB::table('services')
+                    ->where('price', '<=', $price)
+                    ->where(function ($query) use ($services) {
+                        foreach ($services as $service) {
+                            $query->orWhere('service_name', 'LIKE', '%' . $service . '%');
+                        }
+                    })
+                    ->get();
+            } else {
+                $list_filter_services = DB::table('services')
+                    ->where('price', '<=', $price)
+                    ->get();
+            }
+        } else {
+            if (count($services) != 0) {
+                $list_filter_services = DB::table('services')
+                    ->where(function ($query) use ($services) {
+                        foreach ($services as $service) {
+                            $query->orWhere('service_name', 'LIKE', '%' . $service . '%');
+                        }
+                    })
+                    ->get();
+            } else {
+                $list_filter_services = DB::table('services')->get();
+            }
+        }
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'list_filter_services' => $list_filter_services,
+        ], 200);
     }
 
     public function getLowestPrice()
