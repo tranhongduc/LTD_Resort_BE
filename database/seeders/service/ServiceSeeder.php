@@ -21,18 +21,17 @@ class ServiceSeeder extends Seeder
         $feedback_model = new Feedback();
         $list_feedbacks_id = $feedback_model->newQuery()->get('id');
 
-
         $list_food_services = [
-            'Restaurants', 'Pool bar'
+            'Restaurants', 'Pool Bar'
         ];
 
         $list_entertainment_services = [
-            'Swimming pool', 'Golf course', 'Tennis'
+            'Swimming Pool', 'Golf Course', 'Tennis'
         ];
 
 
         $list_wedding_party_services = [
-            'Conference room', 'Outdoor party'
+            'Conference Room', 'Outdoor Party'
         ];
 
         $list_health_care_services = [
@@ -40,7 +39,7 @@ class ServiceSeeder extends Seeder
         ];
 
         $list_local_travel_services = [
-            'Visit local attractions', 'Bicycle rental service'
+            'Visit Local Attractions', 'Bicycle Rental Service'
         ];
 
         for ($i = 0; $i < count($list_service_types_id); $i++) {
@@ -49,7 +48,7 @@ class ServiceSeeder extends Seeder
                     for ($j = 0; $j < count($list_food_services); $j++) {
                         Service::factory()->create([
                             'service_name' => $list_food_services[$j],
-                            'image' => fake()->imageUrl(),
+                            'image' => 'gs://ltd-resort.appspot.com/services/' . $list_food_services[$j] . '.jpg',
                             'description' => fake()->sentence(),
                             'status' => 'AVAILABLE',
                             'price' => 200000,
@@ -63,7 +62,7 @@ class ServiceSeeder extends Seeder
                     for ($j = 0; $j < count($list_entertainment_services); $j++) {
                         Service::factory()->create([
                             'service_name' => $list_entertainment_services[$j],
-                            'image' => fake()->imageUrl(),
+                            'image' => 'gs://ltd-resort.appspot.com/services/' . $list_entertainment_services[$j] . '.jpg',
                             'description' => fake()->sentence(),
                             'status' => 'AVAILABLE',
                             'price' => 250000,
@@ -77,7 +76,7 @@ class ServiceSeeder extends Seeder
                     for ($j = 0; $j < count($list_wedding_party_services); $j++) {
                         Service::factory()->create([
                             'service_name' => $list_wedding_party_services[$j],
-                            'image' => fake()->imageUrl(),
+                            'image' => 'gs://ltd-resort.appspot.com/services/' . $list_wedding_party_services[$j] . '.jpg',
                             'description' => fake()->sentence(),
                             'status' => 'AVAILABLE',
                             'price' => 500000,
@@ -91,7 +90,7 @@ class ServiceSeeder extends Seeder
                     for ($j = 0; $j < count($list_health_care_services); $j++) {
                         Service::factory()->create([
                             'service_name' => $list_health_care_services[$j],
-                            'image' => fake()->imageUrl(),
+                            'image' => 'gs://ltd-resort.appspot.com/services/' . $list_health_care_services[$j] . '.jpg',
                             'description' => fake()->sentence(),
                             'status' => 'AVAILABLE',
                             'price' => 300000,
@@ -105,7 +104,7 @@ class ServiceSeeder extends Seeder
                     for ($j = 0; $j < count($list_local_travel_services); $j++) {
                         Service::factory()->create([
                             'service_name' => $list_local_travel_services[$j],
-                            'image' => fake()->imageUrl(),
+                            'image' => 'gs://ltd-resort.appspot.com/services/' . $list_local_travel_services[$j] . '.jpg',
                             'description' => fake()->sentence(),
                             'status' => 'AVAILABLE',
                             'price' => 400000,

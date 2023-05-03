@@ -98,4 +98,14 @@ class ServiceController extends Controller
             'highest_price' => $highest_price,
         ], 200);
     }
+
+    public function getListServiceNames() {
+        $list_service_names = DB::table('services')->get(['service_name']);
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'list_service_names' => $list_service_names,
+        ], 200);
+    }
 }

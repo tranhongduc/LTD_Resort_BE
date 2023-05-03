@@ -32,7 +32,7 @@ Route::get('/biggest-size-room-type', [RoomController::class, 'getBiggestRoomSiz
 Route::get('/list-room-type-names', [RoomController::class, 'getListRoomTypeName']);
 Route::get('/bedroom-type-names', [RoomController::class, 'getBedroomTypeNames']);
 Route::get('/room-type-names', [RoomController::class, 'getRoomTypeNames']);
-Route::get('/room-type/{id}', [RoomController::class, 'show']);
+Route::get('/find-rooms/{id}', [RoomController::class, 'show']);
 Route::get('/find-room-type', [RoomController::class, 'findRoomType']);
 Route::post('/filter-room-type', [RoomController::class, 'filterRoomType']);
 
@@ -42,10 +42,12 @@ Route::get('/list-services', [ServiceController::class, 'index']);
 Route::get('/service/{id}', [ServiceController::class, 'show']);
 Route::get('/lowest-price-service', [ServiceController::class, 'getLowestPrice']);
 Route::get('/highest-price-service', [ServiceController::class, 'getHighestPrice']);
+Route::get('/list-service-names', [ServiceController::class, 'getListServiceNames']);
 Route::post('/filter-service', [ServiceController::class, 'filterService']);
 
 // Account
 Route::get('accounts', [AccountController::class, 'index']);
+Route::get('accounts/{id}', [AccountController::class, 'show']);
 Route::get('accounts/find/{username}', [AccountController::class, 'find']);
 
 Route::group(['prefix' => 'auth'], function ($router) {
