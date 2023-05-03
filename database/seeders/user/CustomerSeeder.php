@@ -15,16 +15,16 @@ class CustomerSeeder extends Seeder
      */
     public function run(): void
     {
-        $accountModel = new Account();
-        $customerAccounts = $accountModel->newQuery()->where('account_type', '=', 'CUSTOMER')->get();
+        $account_model = new Account();
+        $customer_accounts = $account_model->newQuery()->join('roles', 'accounts.role_id', '=', 'roles.id')->where('role_name', '=', 'ROLE_CUSTOMER')->get(['accounts.id']);
 
-        $rankingModel = new Ranking();
-        $listRankings = $rankingModel->newQuery()->get('id');
+        $ranking_model = new Ranking();
+        $list_rankings = $ranking_model->newQuery()->get('id');
 
-        for ($i = 0; $i < count($customerAccounts); $i++) {
+        for ($i = 0; $i < count($customer_accounts); $i++) {
             Customer::factory()->create([
-                'account_id' => $customerAccounts[$i]->id,
-                'ranking_id' => fake()->randomElement($listRankings),
+                'account_id' => $customer_accounts[$i]->id,
+                'ranking_id' => fake()->randomElement($list_rankings),
             ]);
         }
     }

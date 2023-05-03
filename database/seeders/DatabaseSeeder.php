@@ -3,8 +3,17 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Database\Seeders\room\AreaSeeder;
+use Database\Seeders\room\EquipmentRoomTypeSeeder;
+use Database\Seeders\room\EquipmentSeeder;
+use Database\Seeders\room\ExtraServiceDetailSeeder;
+use Database\Seeders\room\ExtraServiceSeeder;
 use Database\Seeders\room\FloorSeeder;
+use Database\Seeders\room\RoomSeeder;
+use Database\Seeders\room\RoomTypeSeeder;
+use Database\Seeders\service\ServiceSeeder;
+use Database\Seeders\service\ServiceTypeSeeder;
 use Database\Seeders\user\AccountSeeder;
 use Database\Seeders\user\AdminSeeder;
 use Database\Seeders\user\EmployeeSeeder;
@@ -19,22 +28,32 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
 
         $this->call(RoleSeeder::class);  
         $this->call(RankingSeeder::class);
         $this->call(AccountSeeder::class);
         $this->call(DepartmentSeeder::class);
+        $this->call(PositionSeeder::class);
         $this->call(EmployeeSeeder::class);
         $this->call(AdminSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(BlogSeeder::class);
         $this->call(AreaSeeder::class);
         $this->call(FloorSeeder::class);
+        $this->call(EquipmentSeeder::class);
+        $this->call(RoomTypeSeeder::class);
+        $this->call(ExtraServiceSeeder::class);
+        $this->call(FeedbackSeeder::class);
+        $this->call(ServiceTypeSeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(RoomSeeder::class);
+        $this->call(ExtraServiceDetailSeeder::class);
+        $this->call(EquipmentRoomTypeSeeder::class);
     }
 }

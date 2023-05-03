@@ -13,10 +13,10 @@ class RankingSeeder extends Seeder
      */
     public function run(): void
     {
-        $listRanking = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'];
+        $list_ranking = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond'];
 
-        for ($i = 0; $i < count($listRanking); $i++) {
-            $ranking_name = $listRanking[$i];
+        for ($i = 0; $i < count($list_ranking); $i++) {
+            $ranking_name = $list_ranking[$i];
 
             $point_start = 0;
             switch ($ranking_name) {

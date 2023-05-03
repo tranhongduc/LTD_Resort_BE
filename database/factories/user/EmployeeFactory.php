@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\User;
+namespace Database\Factories\user;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,7 +23,6 @@ class EmployeeFactory extends Factory
                                     : fake('vi_VN')->lastName() . ' ' . fake('vi_VN')->middleNameFemale() . ' ' . fake('vi_VN')->firstNameFemale(),
             'gender' => fake()->randomElement(['Nam', 'Nữ']),
             'birthday' => fake()->dateTimeInInterval('-50 years', '+40 years', 'Asia/Ho_Chi_Minh')->format('Y-m-d'),
-            'email' => fake()->unique()->safeEmail(),
             'CMND' => fake()->numerify('#########'),
             'address' => fake()->boolean() ? fake('vi_VN')->city() : fake('vi_VN')->province(),
             'phone' => fake('vi_VN')->regexify('(0|3|5|7|8|9){1}([0-9]{8})'),

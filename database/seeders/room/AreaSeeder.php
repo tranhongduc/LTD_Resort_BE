@@ -15,11 +15,11 @@ class AreaSeeder extends Seeder
     {
         define('NUMBER_OF_AREAS', 7);
 
-        $areaBlocks = ['A', 'B', 'C', 'D', 'E', 'F', 'H'];
+        $areas_zone = ['A', 'B', 'C', 'D', 'E', 'F', 'H'];
         
         for ($i = 0; $i < NUMBER_OF_AREAS; $i++) {
             Area::factory()->create([
-                'area_name' => 'Khu' . ' ' . $areaBlocks[$i]
+                'area_name' => 'Khu' . ' ' . $areas_zone[$i]
             ]);
         }
     }
