@@ -43,6 +43,7 @@ Route::group([
     Route::get('/accounts', [AccountController::class, 'index']);
     Route::get('/accounts/search/{username}', [AccountController::class, 'searchByUsername']);
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
+    Route::patch('/accounts/{id}', [AccountController::class, 'updateAvatar']);
 
     // Room Types
     Route::get('/room-types', [RoomController::class, 'index']);
