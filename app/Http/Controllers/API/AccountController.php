@@ -29,8 +29,8 @@ class AccountController extends Controller
         ], 200);
     }
 
-    public function find($str) {
-        $accounts = Account::where('username', 'like', '%' . $str . '%')->get();
+    public function searchByUsername($username) {
+        $accounts = Account::where('username', 'like', '%' . $username . '%')->get();
 
         if (count($accounts) == 0) {
             return response()->json([
@@ -46,5 +46,4 @@ class AccountController extends Controller
             ], 200);
         }
     }
-
 }
