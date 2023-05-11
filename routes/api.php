@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\ServiceController;
 
@@ -19,44 +20,76 @@ use App\Http\Controllers\API\ServiceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Public route
+Route::group([
+    'middleware' => ['force.json.response', 'api'],
+    'prefix' => 'auth'
+], function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
-// Room Types
-Route::get('/list-room-types', [RoomController::class, 'index']);
-Route::get('/lowest-price-room-type', [RoomController::class, 'getLowestPrice']);
-Route::get('/highest-price-room-type', [RoomController::class, 'getHighestPrice']);
-Route::get('/smallest-size-room-type', [RoomController::class, 'getSmallestRoomSize']);
-Route::get('/biggest-size-room-type', [RoomController::class, 'getBiggestRoomSize']);
-Route::get('/list-room-type-names', [RoomController::class, 'getListRoomTypeName']);
-Route::get('/bedroom-type-names', [RoomController::class, 'getBedroomTypeNames']);
-Route::get('/room-type-names', [RoomController::class, 'getRoomTypeNames']);
-Route::get('/find-rooms/{id}', [RoomController::class, 'show']);
-Route::get('/find-room-type', [RoomController::class, 'findRoomType']);
-Route::post('/filter-room-type', [RoomController::class, 'filterRoomType']);
+// Auth API
+Route::group([
+    'middleware' => ['force.json.response', 'api', 'api.auth'],
+    'prefix' => 'auth',
+], function ($router) {
+    // Authenticate
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/me', [AuthController::class, 'me']);
 
+    // Account
+    Route::get('/accounts', [AccountController::class, 'index']);
+    Route::get('/accounts/search/{username}', [AccountController::class, 'searchByUsername']);
+    Route::get('/accounts/{id}', [AccountController::class, 'show']);
 
-// Services
-Route::get('/list-services', [ServiceController::class, 'index']);
-Route::get('/service/{id}', [ServiceController::class, 'show']);
-Route::get('/lowest-price-service', [ServiceController::class, 'getLowestPrice']);
-Route::get('/highest-price-service', [ServiceController::class, 'getHighestPrice']);
-Route::get('/list-service-names', [ServiceController::class, 'getListServiceNames']);
-Route::post('/filter-service', [ServiceController::class, 'filterService']);
+    // Room Types
+    Route::get('/room-types', [RoomController::class, 'index']);
+    Route::get('/room-types/lowest-price', [RoomController::class, 'getLowestPrice']);
+    Route::get('/room-types/highest-price', [RoomController::class, 'getHighestPrice']);
+    Route::get('/room-types/smallest-size', [RoomController::class, 'getSmallestRoomSize']);
+    Route::get('/room-types/biggest-size', [RoomController::class, 'getBiggestRoomSize']);
+    Route::get('/room-types/names', [RoomController::class, 'getListRoomTypeName']);
+    Route::get('/room-types/bedroom-names', [RoomController::class, 'getBedroomTypeNames']);
+    Route::get('/room-types/room-names', [RoomController::class, 'getRoomTypeNames']);
+    Route::post('/room-types/filter', [RoomController::class, 'filterRoomType']);
+    Route::get('/room-types/{id}', [RoomController::class, 'show']);
 
-// Account
-Route::get('accounts', [AccountController::class, 'index']);
-Route::get('accounts/{id}', [AccountController::class, 'show']);
-Route::get('accounts/find/{username}', [AccountController::class, 'find']);
-
-Route::group(['prefix' => 'auth'], function ($router) {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
+    // Services
+    Route::get('/services', [ServiceController::class, 'index']);
+    Route::get('/services/lowest-price', [ServiceController::class, 'getLowestPrice']);
+    Route::get('/services/highest-price', [ServiceController::class, 'getHighestPrice']);
+    Route::get('services/names', [ServiceController::class, 'getListServiceNames']);
+    Route::post('services/filter', [ServiceController::class, 'filterService']);
+    Route::get('/services/{id}', [ServiceController::class, 'show']);
 });
 
-// Room Types
+// Customer API
+Route::group([
+    'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.customer'],
+    'prefix' => 'customer',
+], function ($router) {
+    Route::get('/list', [CustomerController::class, 'index']);
+    Route::get('/{id}', [CustomerController::class, 'show']);
+    Route::get('/account/{account_id}', [CustomerController::class, 'getCustomerByAccountId']);
+    Route::get('/ranking/{id}', [CustomerController::class, 'getRankingNameByAccountId']);
+    Route::patch('/{id}', [CustomerController::class, 'update']);
 
+});
+
+// Employee API
+Route::group([
+    'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.employee'],
+    'prefix' => 'employee',
+], function ($router) {
+
+});
+
+// Admin API
+Route::group([
+    'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.admin'],
+    'prefix' => 'admin',
+], function ($router) {
+    
+});
