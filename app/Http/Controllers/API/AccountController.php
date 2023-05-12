@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\user\Account;
 use Illuminate\Support\Facades\DB;
 
+
 class AccountController extends Controller
 {
     public function index()
@@ -29,8 +30,8 @@ class AccountController extends Controller
         ], 200);
     }
 
-    public function find($str) {
-        $accounts = Account::where('username', 'like', '%' . $str . '%')->get();
+    public function searchByUsername($username) {
+        $accounts = Account::where('username', 'like', '%' . $username . '%')->get();
 
         if (count($accounts) == 0) {
             return response()->json([
@@ -47,4 +48,29 @@ class AccountController extends Controller
         }
     }
 
+    public function updateAvatar(Request $request, $id) {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'avatar_url' => 'required|string|max:255',
+        ]);
+
+        $result = DB::table('accounts')->where('id', '=', $id)->update([
+            'avatar' => $validatedData['avatar_url'],
+        ]);
+
+        if ($result) {
+            return response()->json([
+                'message' => 'Update avatar successfully!',
+                'status' => 200,
+                'account' => $result,
+            ], 200);
+            
+        } else {
+            return response()->json([
+                'message' => 'Update avatar failed!',
+                'status' => 400,
+                'account' => $result,
+            ], 400);
+        }
+    }
 }

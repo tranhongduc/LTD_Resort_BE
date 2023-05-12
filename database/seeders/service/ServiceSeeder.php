@@ -22,7 +22,7 @@ class ServiceSeeder extends Seeder
         $list_feedbacks_id = $feedback_model->newQuery()->get('id');
 
         $list_food_services = [
-            'Restaurants', 'Pool Bar'
+            'Restaurants', 'Pool bar'
         ];
 
         $list_entertainment_services = [

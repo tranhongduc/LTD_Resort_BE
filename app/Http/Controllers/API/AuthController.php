@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\user\Account;
+use App\Models\user\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +49,12 @@ class AuthController extends Controller
             'avatar' => $request->avatar,
             'enabled' => $request->enabled,
             'role_id' => $request->role_id
+        ]);
+
+        Customer::create([
+            'ranking_point' => 0,
+            'account_id' => $account->id,
+            'ranking_id' => 1,
         ]);
 
         // Get a JWT
@@ -145,15 +152,14 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        // $role_user = DB::table('roles')->where('id', '=', auth()->user()->role_id)->get('role_name');
+        $role_user = DB::table('roles')->where('id', '=', auth()->user()->role_id)->value('role_name');
 
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'message' => 'Login successfully!',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user(),
-            // 'role_user' => $role_user,
+            'user' => array_merge(auth()->user()->toArray(), ['role_name' => $role_user]),
         ]);
     }
 }

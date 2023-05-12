@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('account_bank');
             $table->string('name_bank');
             $table->dateTime('day_start');
-            $table->dateTime('day_quit');
+            $table->dateTime('day_quit')->nullable();
             $table->string('image')->nullable();
             $table->boolean('status');
-            $table->foreignId('account_id')->constrained('accounts');
+            $table->foreignId('account_id')->nullable()->constrained('accounts');
             $table->foreignId('position_id')->constrained('positions');
             $table->timestamps();
             $table->softDeletes();
