@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('full_name')->nullable();
-            $table->string('gender')->nullable();;
-            $table->date('birthday')->nullable();;
-            $table->string('CMND')->nullable()->unique();
-            $table->string('address')->nullable();;
-            $table->string('phone')->nullable()->unique();
+            $table->string('gender')->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('CMND')->unique()->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->integer('ranking_point');
             $table->foreignId('account_id')->constrained('accounts');
             $table->foreignId('ranking_id')->nullable()->constrained('rankings');

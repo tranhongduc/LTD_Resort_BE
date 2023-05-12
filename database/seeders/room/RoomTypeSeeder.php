@@ -16,7 +16,7 @@ class RoomTypeSeeder extends Seeder
         $bedroom_types = ['Single Bedroom', 'Twin Bedroom', 'Double Bedroom', 'Triple Bedroom', 'Quad Bedroom'];
         $room_types = ['Superior Room', 'Deluxe Room', 'Executive Room', 'Suite Room'];
 
-        $bedroom_types_price = [200000, 240000, 250000, 300000, 35000];
+        $bedroom_types_price = [200000, 240000, 250000, 300000, 350000];
         $room_types_price = [1.2, 1.4, 2, 2.5];
 
         $room_sizes = [20, 25, 30, 35, 40];
@@ -34,7 +34,7 @@ class RoomTypeSeeder extends Seeder
                     'number_rooms' => $number_rooms[$i],
                     'number_customers' => $number_customers[$i],
                     'description' => fake()->sentence(),
-                    'image' => fake()->imageUrl(),
+                    'image' => 'gs://ltd-resort.appspot.com/room-types/' . $bedroom_types[$i] . ' ' . $room_types[$j] . '.jpg',
                     'price' => $bedroom_types_price[$i] * $room_types_price[$j],
                     'point_ranking' => $list_point_rankings[$i]
                 ]);

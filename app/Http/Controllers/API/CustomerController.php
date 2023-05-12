@@ -14,13 +14,100 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $listCustomer = Customer::all();
+        $list_customers = Customer::all();
+      
         return response()->json([
             'message' => 'Query successfully!',
-            'status'=> 200,
-            'list_customer' => $listCustomer
-        ]);
+            'status' => 200,
+            'list_customers' => $list_customers,
+        ], 200);
     }
+  
+    public function show($id)
+    {
+        $customer = Customer::find($id);
+        if ($customer) {
+            return response()->json([
+                'message' => 'Query successfully!',
+                'status' => 200,
+                'customer' => $customer,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Data not found!',
+                'status' => 404,
+                'customer' => $customer,
+            ], 404);
+        }
+    }
+
+    public function getCustomerByAccountId($account_id) {
+        $customer = DB::table('customers')->where('account_id', '=', $account_id)->first();
+
+        if ($customer) {
+            return response()->json([
+                'message' => 'Query successfully!',
+                'status' => 200,
+                'customer' => $customer,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Data not found!',
+                'status' => 404,
+                'customer' => $customer,
+            ], 404);
+        }
+    }
+
+    public function getRankingNameByAccountId($id) {
+        $customer_id = DB::table('customers')->where('account_id', '=', $id)->value('id');
+        $ranking_id = DB::table('customers')->where('id', '=', $customer_id)->value('ranking_id');
+        $ranking_name = DB::table('rankings')->where('id', '=', $ranking_id)->value('ranking_name');
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'ranking_name' => $ranking_name,
+        ], 200);
+    }
+
+    public function updateByAccountId(Request $request) {
+        $customer_id = DB::table('customers')->where('account_id', '=', $request->account_id)->value('id');
+
+        // Validate the request data
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'gender' => 'required',
+            'birth_date' => 'required',
+            'id_card' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $customer = DB::table('customers')->where('id', '=', $customer_id)->update([
+            'full_name' => $validatedData['full_name'],
+            'gender' => $validatedData['gender'],
+            'birthday' => $validatedData['birth_date'],
+            'CMND' => $validatedData['id_card'],
+            'address' => $validatedData['address'],
+            'phone' => $validatedData['phone'],
+        ]);
+
+        if ($customer) {
+            return response()->json([
+                'message' => 'Update successfully!',
+                'status' => 200,
+                'customer' => $customer,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Update failed!',
+                'status' => 400,
+                'customer' => $customer,
+            ], 400);
+        }
+    }
+
     public function searchByParams($search)
     {
         if($search){
@@ -28,183 +115,50 @@ class CustomerController extends Controller
         
             if(count($result) > 0){
                 return response()->json([
+                    'message' => 'Query successfully!'
                     'status' => 200,
-                    'data' =>$result
+                    'data' => $result
                 ]);
-            }
-            else{
+            } else {
                 return response()->json([
+                    'message' => 'Data not found!'
                     'status' => 400,
-                    'message' => 'Not search'
+                    'data' => $result
                 ]);
-        
             }
         }
     }
+  
     public function customerFindID($id)
     {
-        $customer= Customer::find($id);
+        $customer = Customer::find($id);
+      
         if($customer){
             $ranking = Ranking::find($customer->ranking_id);
-            $data[]=[
-                "id"=> $customer->id,
+            $data[] = [
+                "id" => $customer->id,
                 "name" => $customer->full_name,
                 "gender" => $customer->gender,
-                "birthday"=>$customer->birthday,
-                "CMND"=>$customer->CMND,
-                "address"=>$customer->address,
-                "phone"=>$customer->phone,
-                "ranking_point"=>$customer->ranking_point,
-                "ranking_name"=>$ranking->ranking_name,
-                "discount"=>$ranking->discount
-                 
+                "birthday" => $customer->birthday,
+                "CMND" => $customer->CMND,
+                "address" => $customer->address,
+                "phone" => $customer->phone,
+                "ranking_point" => $customer->ranking_point,
+                "ranking_name" => $ranking->ranking_name,
+                "discount" => $ranking->discount
             ];
             return response()->json([
-                'status'=>200,
-                'message'=> 'OK',
-                'data'=>$data
+                'message' => 'Query successfully!',
+                'status' => 200,
+                'data' => $data
             ]);
-
-        }else{
+        } else {
             return response()->json([
-            'status'=>404,
-            'message'=>'No ID Found',
+              'message' => 'No ID Found',
+              'status' => 404,
+              'data' => $data
             ]);
         }
-        
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    // public function create(Request $request, $id)
-    // {
-    //     $customer = new Customer;
-    //     $customer->full_name = $request->input('full_name');
-    //     $customer->gendere = $request->input('gendere');
-    //     $customer->birthay = $request->input('birthay');
-    //     $customer->CMND = $request->input('CMND');
-    //     $customer->address = $request->input('address');
-    //     $customer->phone = $request->input('phone');
-    //     $customer->save();
-    //     return response()->json([
-    //         'status' => 200,
-    //         'message' => 'Question Added Successfully',
-    //     ]);
-    // }
-    public function registerCustomer(Request $request){
-        // validate form
-        $validator = Validator::make($request->all(),[ 
-            'username'=> 'required',
-            'email'=>'required|email|unique:accounts',
-            'password'=>'required|min:6',
-            'confirm_password'=> 'required|same:password',
-        ]);
-
-        if($validator->fails()){
-            $response =[
-                'status_code' => 400,
-                'message' => $validator->errors(),
-            ];
-            return response()->json($response,400);
-        }
-
-        // Create new account
-        $account = Account::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'enabled' => $request->enabled|'1',
-            'role_id' => $request->role_id|'3'
-        ]);
-        if($account){
-            $account->customer()->create([
-            'account_id'=>$account->id,
-            'ranking_point'=>$request->ranking_point|'0'
-            ]);
-        }
-
-        // Get a JWT
-        // $token = Customer::login($account);
-
-        return response()->json([
-            'status_code' => 201,
-            'message' => 'User created successfully!',
-            'user' => $account,
-            // 'authorization' => [
-            //     'token' => $token,
-            //     'type' => 'bearer',
-            // ]
-        ], 201);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    // public function store(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'full_name' => 'required|string',
-    //         'gender' => 'required'|'Nam'or 'Nữ',
-    //         'birthay'=>'required'|date('y-m-d'),
-    //         'CMND'=>'required|number',
-    //         'address'=>'required|string',
-    //         'phone'=>'required|number',
-            
-
-    //     ]);
-    //     if ($validator->fails()) {
-    //         return response()->json([
-    //             'validate' => true,
-    //             'message' => 'You need to enter customer',
-    //         ]);
-    //     }
-    //     $customer = new Customer;
-    //     $customer->full_name = $request->input('full_name');
-    //     $customer->gendere = $request->input('gendere');
-    //     $customer->birthay = $request->input('birthay');
-    //     $customer->CMND = $request->input('CMND');
-    //     $customer->address = $request->input('address');
-    //     $customer->phone = $request->input('phone');
-    //     $customer->save();
-    //     return response()->json([
-    //         'status' => 200,
-    //         'message' => 'Question Added Successfully',
-    //     ]);
-    // }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $customer = Customer::find($id);
-        if($customer){
-            return response()->json([
-                'status'=>200,
-                'message'=> 'OK',
-                'customer'=>$customer,
-            ]);
-
-        }else{
-            return response()->json([
-            'status'=>404,
-            'message'=>'No ID Found',
-            ]);
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        $Customer = Customer::find($id);
-        return response()->json([
-            'status' => 200,
-            'question' => $Customer,
-        ]);
     }
 
     /**
@@ -213,6 +167,7 @@ class CustomerController extends Controller
     public function update(Request $request, string $id)
     {
         $input = $request->all();
+      
         $validator = Validator::make($input, [
             'full_name',
             'gender' ,
@@ -220,8 +175,6 @@ class CustomerController extends Controller
             'CMND',
             'address',
             'phone',
-            
-
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -229,7 +182,7 @@ class CustomerController extends Controller
                 'message' => 'You need to enter customer',
             ]);
         }
-        //
+
         $customer = Customer::find($id);
         if ($customer) {
             $customer->full_name = $request->full_name;
@@ -241,22 +194,16 @@ class CustomerController extends Controller
             $customer->update();
             return response()->json([
                 'status' => 200,
-                'message' => 'Question Updated Successfully',
-                // 're' => $customer,
+                'message' => 'Update successfully!',
+                'customer' => $customer,
             ]);
         } else {
             return response()->json([
+                'message' => 'Update failed!',
                 'status' => 404,
-                'message' => 'No ID Found',
+                'customer' => $customer,
             ]);
          }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(string $id)
-    // {
-    //     //
-    // }
+    }
   }
 }
