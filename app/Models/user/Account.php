@@ -44,7 +44,10 @@ class Account extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
     ];
-
+    public function customer()
+    {
+    return $this->belongsTo(Customer::class);
+    }
     // Rest omitted for brevity
 
     /**
@@ -59,7 +62,7 @@ class Account extends Authenticatable implements JWTSubject
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
+     *s
      * @return array
      */
     public function getJWTCustomClaims()

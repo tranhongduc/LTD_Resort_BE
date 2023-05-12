@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\ServiceController;
 
 /*
@@ -75,8 +76,10 @@ Route::group([
     Route::get('/{id}', [CustomerController::class, 'show']);
     Route::get('/account/{account_id}', [CustomerController::class, 'getCustomerByAccountId']);
     Route::get('/ranking/{id}', [CustomerController::class, 'getRankingNameByAccountId']);
+    Route::get('/search/{search}', [CustomerController::class, 'searchByParams']);
+    Route::get('/search/{id}', [CustomerController::class, 'customerFindID']);
     Route::patch('/{id}', [CustomerController::class, 'update']);
-
+    Route::patch('/account/{account_id}', [CustomerController::class, 'updateByAccountId']);
 });
 
 // Employee API
@@ -84,7 +87,13 @@ Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.employee'],
     'prefix' => 'employee',
 ], function ($router) {
-
+  Route::get('/list', [EmployeeController::class, 'index']);
+  Route::get('/{id}', [EmployeeController::class, 'show']);
+  Route::get('/employee-Search/{search}', [EmployeeController::class, 'searchByParams']);
+  Route::get('/employee-Find/{id}',[EmployeeController::class, 'employeeFindID']);
+  Route::post('/employee-Store', [EmployeeController::class, 'store']);
+  Route::get('/employee-Edit/{id}', [EmployeeController::class, 'edit']);
+  Route::post('/employee-Update/{id}', [EmployeeController::class, 'update']);
 });
 
 // Admin API
@@ -92,5 +101,10 @@ Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.admin'],
     'prefix' => 'admin',
 ], function ($router) {
-    
+  Route::get('/admins', [AdminController::class, 'index']);
+  Route::get('/admin/{id}',[AdminController::class, 'show']);
+  Route::get('/admin-Search/{search}', [AdminController::class, 'searchByParams']);
+  Route::get('/admin-Find/{id}',[AdminController::class, 'adminFindID']);
+  Route::get('/admin-Edit/{id}',[AdminController::class, 'edit']);
+  Route::post('/admin-Update/{id}',[AdminController::class, 'update']);
 });

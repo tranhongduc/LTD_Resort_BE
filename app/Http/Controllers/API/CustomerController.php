@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ranking;
 use App\Models\user\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
+use App\Models\user\Account;
+use Illuminate\Support\Facades\Hash;
 class CustomerController extends Controller
 {
     public function index()
     {
         $list_customers = Customer::all();
+      
         return response()->json([
             'message' => 'Query successfully!',
             'status' => 200,
             'list_customers' => $list_customers,
         ], 200);
     }
-
+  
     public function show($id)
     {
         $customer = Customer::find($id);
@@ -67,7 +71,7 @@ class CustomerController extends Controller
         ], 200);
     }
 
-    public function update(Request $request) {
+    public function updateByAccountId(Request $request) {
         $customer_id = DB::table('customers')->where('account_id', '=', $request->account_id)->value('id');
 
         // Validate the request data
@@ -103,4 +107,103 @@ class CustomerController extends Controller
             ], 400);
         }
     }
+
+    public function searchByParams($search)
+    {
+        if($search){
+            $result  = Customer::where('full_name','LIKE',"%{$search}%")->get();
+        
+            if(count($result) > 0){
+                return response()->json([
+                    'message' => 'Query successfully!'
+                    'status' => 200,
+                    'data' => $result
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Data not found!'
+                    'status' => 400,
+                    'data' => $result
+                ]);
+            }
+        }
+    }
+  
+    public function customerFindID($id)
+    {
+        $customer = Customer::find($id);
+      
+        if($customer){
+            $ranking = Ranking::find($customer->ranking_id);
+            $data[] = [
+                "id" => $customer->id,
+                "name" => $customer->full_name,
+                "gender" => $customer->gender,
+                "birthday" => $customer->birthday,
+                "CMND" => $customer->CMND,
+                "address" => $customer->address,
+                "phone" => $customer->phone,
+                "ranking_point" => $customer->ranking_point,
+                "ranking_name" => $ranking->ranking_name,
+                "discount" => $ranking->discount
+            ];
+            return response()->json([
+                'message' => 'Query successfully!',
+                'status' => 200,
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+              'message' => 'No ID Found',
+              'status' => 404,
+              'data' => $data
+            ]);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $input = $request->all();
+      
+        $validator = Validator::make($input, [
+            'full_name',
+            'gender' ,
+            'birthday',
+            'CMND',
+            'address',
+            'phone',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'validate' => true,
+                'message' => 'You need to enter customer',
+            ]);
+        }
+
+        $customer = Customer::find($id);
+        if ($customer) {
+            $customer->full_name = $request->full_name;
+            $customer->gender = $request->gender;
+            $customer->birthday = $request->birthday;
+            $customer->CMND = $request->CMND;
+            $customer->address = $request->address;
+            $customer->phone = $request->phone;
+            $customer->update();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Update successfully!',
+                'customer' => $customer,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Update failed!',
+                'status' => 404,
+                'customer' => $customer,
+            ]);
+         }
+    }
+  }
 }

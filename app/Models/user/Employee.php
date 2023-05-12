@@ -25,7 +25,6 @@ class Employee extends Model
         'full_name',
         'gender',
         'birthday',
-        'email',
         'CMND',
         'address',
         'phone',
@@ -36,7 +35,7 @@ class Employee extends Model
         'image',
         'status',
         'account_id',
-        'department_id',
+        'position_id',
     ];
 
     protected $dates = ['day_start', 'day_quit'];

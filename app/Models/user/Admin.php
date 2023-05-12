@@ -25,7 +25,6 @@ class Admin extends Model
         'full_name',
         'gender',
         'birthday',
-        'email',
         'CMND',
         'address',  
         'phone',

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->integer('ranking_point');
             $table->foreignId('account_id')->constrained('accounts');
-            $table->foreignId('ranking_id')->constrained('rankings');
+            $table->foreignId('ranking_id')->nullable()->constrained('rankings');
             $table->timestamps();
         });
     }
