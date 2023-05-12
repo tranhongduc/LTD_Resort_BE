@@ -62,8 +62,8 @@ Route::group([
     Route::get('/services', [ServiceController::class, 'index']);
     Route::get('/services/lowest-price', [ServiceController::class, 'getLowestPrice']);
     Route::get('/services/highest-price', [ServiceController::class, 'getHighestPrice']);
-    Route::get('services/names', [ServiceController::class, 'getListServiceNames']);
-    Route::post('services/filter', [ServiceController::class, 'filterService']);
+    Route::get('/services/names', [ServiceController::class, 'getListServiceNames']);
+    Route::post('/services/filter', [ServiceController::class, 'filterService']);
     Route::get('/services/{id}', [ServiceController::class, 'show']);
 });
 
@@ -89,11 +89,10 @@ Route::group([
 ], function ($router) {
   Route::get('/list', [EmployeeController::class, 'index']);
   Route::get('/{id}', [EmployeeController::class, 'show']);
-  Route::get('/employee-Search/{search}', [EmployeeController::class, 'searchByParams']);
-  Route::get('/employee-Find/{id}',[EmployeeController::class, 'employeeFindID']);
-  Route::post('/employee-Store', [EmployeeController::class, 'store']);
-  Route::get('/employee-Edit/{id}', [EmployeeController::class, 'edit']);
-  Route::post('/employee-Update/{id}', [EmployeeController::class, 'update']);
+  Route::get('/search/{search}', [EmployeeController::class, 'searchByParams']);
+  Route::get('/find/{id}',[EmployeeController::class, 'employeeFindID']);
+  Route::post('/{id}', [EmployeeController::class, 'store']);
+  Route::patch('/{id}', [EmployeeController::class, 'update']);
 });
 
 // Admin API
@@ -101,10 +100,9 @@ Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.admin'],
     'prefix' => 'admin',
 ], function ($router) {
-  Route::get('/admins', [AdminController::class, 'index']);
-  Route::get('/admin/{id}',[AdminController::class, 'show']);
-  Route::get('/admin-Search/{search}', [AdminController::class, 'searchByParams']);
-  Route::get('/admin-Find/{id}',[AdminController::class, 'adminFindID']);
-  Route::get('/admin-Edit/{id}',[AdminController::class, 'edit']);
-  Route::post('/admin-Update/{id}',[AdminController::class, 'update']);
+  Route::get('/list', [AdminController::class, 'index']);
+  Route::get('/{id}',[AdminController::class, 'show']);
+  Route::get('/search/{search}', [AdminController::class, 'searchByParams']);
+  Route::get('/find/{id}',[AdminController::class, 'adminFindID']);
+  Route::patch('/{id}',[AdminController::class, 'update']);
 });
