@@ -10,19 +10,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\user\Account;
 use Illuminate\Support\Facades\Hash;
+
 class CustomerController extends Controller
 {
     public function index()
     {
         $list_customers = Customer::all();
-      
+
         return response()->json([
             'message' => 'Query successfully!',
             'status' => 200,
             'list_customers' => $list_customers,
         ], 200);
     }
-  
+
     public function show($id)
     {
         $customer = Customer::find($id);
@@ -41,7 +42,8 @@ class CustomerController extends Controller
         }
     }
 
-    public function getCustomerByAccountId($account_id) {
+    public function getCustomerByAccountId($account_id)
+    {
         $customer = DB::table('customers')->where('account_id', '=', $account_id)->first();
 
         if ($customer) {
@@ -59,7 +61,8 @@ class CustomerController extends Controller
         }
     }
 
-    public function getRankingNameByAccountId($id) {
+    public function getRankingNameByAccountId($id)
+    {
         $customer_id = DB::table('customers')->where('account_id', '=', $id)->value('id');
         $ranking_id = DB::table('customers')->where('id', '=', $customer_id)->value('ranking_id');
         $ranking_name = DB::table('rankings')->where('id', '=', $ranking_id)->value('ranking_name');
@@ -71,7 +74,8 @@ class CustomerController extends Controller
         ], 200);
     }
 
-    public function updateByAccountId(Request $request) {
+    public function updateByAccountId(Request $request)
+    {
         $customer_id = DB::table('customers')->where('account_id', '=', $request->account_id)->value('id');
 
         // Validate the request data
@@ -110,30 +114,30 @@ class CustomerController extends Controller
 
     public function searchByParams($search)
     {
-        if($search){
-            $result  = Customer::where('full_name','LIKE',"%{$search}%")->get();
-        
-            if(count($result) > 0){
+        if ($search) {
+            $result  = Customer::where('full_name', 'LIKE', "%{$search}%")->get();
+
+            if (count($result) > 0) {
                 return response()->json([
-                    'message' => 'Query successfully!'
+                    'message' => 'Query successfully!',
                     'status' => 200,
-                    'data' => $result
+                    'data' => $result,
                 ]);
             } else {
                 return response()->json([
-                    'message' => 'Data not found!'
+                    'message' => 'Data not found!',
                     'status' => 400,
-                    'data' => $result
+                    'data' => $result,
                 ]);
             }
         }
     }
-  
+
     public function customerFindID($id)
     {
         $customer = Customer::find($id);
-      
-        if($customer){
+
+        if ($customer) {
             $ranking = Ranking::find($customer->ranking_id);
             $data[] = [
                 "id" => $customer->id,
@@ -154,9 +158,8 @@ class CustomerController extends Controller
             ]);
         } else {
             return response()->json([
-              'message' => 'No ID Found',
-              'status' => 404,
-              'data' => $data
+                'message' => 'No ID Found',
+                'status' => 404,
             ]);
         }
     }
@@ -167,10 +170,10 @@ class CustomerController extends Controller
     public function update(Request $request, string $id)
     {
         $input = $request->all();
-      
+
         $validator = Validator::make($input, [
             'full_name',
-            'gender' ,
+            'gender',
             'birthday',
             'CMND',
             'address',
@@ -203,7 +206,6 @@ class CustomerController extends Controller
                 'status' => 404,
                 'customer' => $customer,
             ]);
-         }
+        }
     }
-  }
 }
