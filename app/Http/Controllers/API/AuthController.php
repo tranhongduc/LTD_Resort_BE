@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -45,9 +45,11 @@ class AuthController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'enabled' => $request->enabled,
-            'role_id' => $request->role_id
+            'enabled' => $request->enabled|'1',
+            'role_id' => $request->role_id|'3'
         ]);
+
+        // if($account)
 
         // Get a JWT
         $token = Auth::login($account);

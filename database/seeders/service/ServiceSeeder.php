@@ -23,28 +23,27 @@ class ServiceSeeder extends Seeder
 
 
         $list_food_services = [
-            'restaurants', 'pool bar'
+            'Restaurants', 'Pool bar'
         ];
 
         $list_entertainment_services = [
-            'swimming pool', 'golf course', 'tennis'
+            'Swimming pool', 'Golf course', 'Tennis'
         ];
 
 
         $list_wedding_party_services = [
-            'conference room', 'outdoor party'
+            'Conference room', 'Outdoor party'
         ];
 
         $list_health_care_services = [
-            'gym', 'yoga', 'spa'
+            'Gym', 'Yoga', 'Spa'
         ];
 
         $list_local_travel_services = [
-            'visit local attractions', 'bicycle rental service'
+            'Visit local attractions', 'Bicycle rental service'
         ];
 
         for ($i = 0; $i < count($list_service_types_id); $i++) {
-            // echo($list_service_types_id[$i]->id);
             switch($list_service_types_id[$i]->id) {
                 case 1: 
                     for ($j = 0; $j < count($list_food_services); $j++) {

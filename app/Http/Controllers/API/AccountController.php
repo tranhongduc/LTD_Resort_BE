@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\user\Account;
-use App\Models\user\Customer;
+
 
 class AccountController extends Controller
 {
@@ -33,14 +33,5 @@ class AccountController extends Controller
         ]);
     }
 
-    public function showCustomer()
-    {
-        $listCustomer = Customer::all();
-        return response()->json([
-            'message' => 'Query successfully!',
-            'status'=> 200,
-            'list_customer' => $listCustomer
-        ]);
-    }
 
 }
