@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('room_size');
             $table->integer('number_rooms');
             $table->integer('number_customers');
-            $table->string('description');
+            $table->text('description');
             $table->string('image')->nullable();
             $table->float('price');
             $table->integer('point_ranking');

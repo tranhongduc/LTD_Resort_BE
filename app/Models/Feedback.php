@@ -32,5 +32,7 @@ class Feedback extends Model
         'feedback_status',
         'customer_id',
         'employee_id',
+        'room_type_id',
+        'service_id',
     ];
 }
