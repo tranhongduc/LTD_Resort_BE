@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Feedback;
+use App\Models\room\RoomType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,6 @@ class FeedbackSeeder extends Seeder
      */
     public function run(): void
     {
-        Feedback::factory(20)->create();
+        Feedback::factory(50)->create();
     }
 }

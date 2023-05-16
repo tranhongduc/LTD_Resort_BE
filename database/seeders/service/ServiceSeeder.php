@@ -18,8 +18,6 @@ class ServiceSeeder extends Seeder
     {
         $service_type_model = new ServiceType();
         $list_service_types_id = $service_type_model->newQuery()->get(['id']);
-        $feedback_model = new Feedback();
-        $list_feedbacks_id = $feedback_model->newQuery()->get('id');
 
         $list_food_services = [
             'Restaurants', 'Pool bar'
@@ -53,7 +51,6 @@ class ServiceSeeder extends Seeder
                             'status' => 'AVAILABLE',
                             'price' => 200000,
                             'point_ranking' => 200,
-                            'feedback_id' => fake()->randomElement($list_feedbacks_id),
                             'service_type_id' => $list_service_types_id[$i]->id
                         ]);
                     }
@@ -67,7 +64,6 @@ class ServiceSeeder extends Seeder
                             'status' => 'AVAILABLE',
                             'price' => 250000,
                             'point_ranking' => 250,
-                            'feedback_id' => fake()->randomElement($list_feedbacks_id),
                             'service_type_id' => $list_service_types_id[$i]->id
                         ]);
                     }
@@ -81,7 +77,6 @@ class ServiceSeeder extends Seeder
                             'status' => 'AVAILABLE',
                             'price' => 500000,
                             'point_ranking' => 300,
-                            'feedback_id' => fake()->randomElement($list_feedbacks_id),
                             'service_type_id' => $list_service_types_id[$i]->id
                         ]);
                     }
@@ -95,7 +90,6 @@ class ServiceSeeder extends Seeder
                             'status' => 'AVAILABLE',
                             'price' => 300000,
                             'point_ranking' => 250,
-                            'feedback_id' => fake()->randomElement($list_feedbacks_id),
                             'service_type_id' => $list_service_types_id[$i]->id
                         ]);
                     }
@@ -109,7 +103,6 @@ class ServiceSeeder extends Seeder
                             'status' => 'AVAILABLE',
                             'price' => 400000,
                             'point_ranking' => 300,
-                            'feedback_id' => fake()->randomElement($list_feedbacks_id),
                             'service_type_id' => $list_service_types_id[$i]->id
                         ]);
                     }
