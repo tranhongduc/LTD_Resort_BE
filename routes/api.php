@@ -8,6 +8,7 @@ use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\ServiceController;
 
 /*
@@ -65,6 +66,13 @@ Route::group([
     Route::get('/services/names', [ServiceController::class, 'getListServiceNames']);
     Route::post('/services/filter', [ServiceController::class, 'filterService']);
     Route::get('/services/{id}', [ServiceController::class, 'show']);
+
+    // Feedbacks
+    Route::get('/feedbacks', [FeedbackController::class, 'index']);
+    Route::get('/feedbacks/room', [FeedbackController::class, 'getAllFeedbackRooms']);
+    Route::get('/feedbacks/service', [FeedbackController::class, 'getAllFeedbackServices']);
+    Route::get('/feedbacks/room-type/{id}', [FeedbackController::class, 'getFeedbackByRoomTypeId']);
+    Route::get('/feedbacks/{id}', [FeedbackController::class, 'show']);
 });
 
 // Customer API
@@ -75,7 +83,7 @@ Route::group([
     Route::get('/list', [CustomerController::class, 'index']);
     Route::get('/{id}', [CustomerController::class, 'show']);
     Route::get('/account/{account_id}', [CustomerController::class, 'getCustomerByAccountId']);
-    Route::get('/ranking/{id}', [CustomerController::class, 'getRankingNameByAccountId']);
+    Route::get('/ranking/{account_id}', [CustomerController::class, 'getRankingNameByAccountId']);
     Route::get('/search/{search}', [CustomerController::class, 'searchByParams']);
     Route::get('/search/{id}', [CustomerController::class, 'customerFindID']);
     Route::patch('/{id}', [CustomerController::class, 'update']);

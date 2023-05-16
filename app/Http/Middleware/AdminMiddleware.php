@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\DB;
 
-class Admin
+class AdminMiddleware
 {
     /**
      * Handle an incoming request.
