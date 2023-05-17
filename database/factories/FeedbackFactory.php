@@ -23,7 +23,8 @@ class FeedbackFactory extends Factory
     {
         $feedback_types = ['ROOM', 'SERVICE'];
         $feedback_type = fake()->randomElement($feedback_types);
-        $ratings = [1, 2, 3, 4, 5];
+        $good_ratings = [4, 5];
+        $bad_ratings = [1, 2, 3];
         $feedback_status = ['Feedbacked', 'Not feedbacked yet'];
 
         $employee_model = new Employee();
@@ -43,7 +44,7 @@ class FeedbackFactory extends Factory
             'date_response' => $isFeedbacked == 'Feedbacked' ? fake()->dateTimeInInterval('-3 years', '+ 2 months', 'Asia/Ho_Chi_Minh') : null,
             'feedback_type' => $feedback_type,
             'image' => fake()->imageUrl(),
-            'rating' => fake()->randomElement($ratings),
+            'rating' => fake()->boolean(90) ? fake()->randomElement($good_ratings) : fake()->randomElement($bad_ratings),
             'title' => fake()->sentence(),
             'comment' => fake()->paragraph(16),
             'feedback_status' => $isFeedbacked,
