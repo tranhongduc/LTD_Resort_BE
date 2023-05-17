@@ -66,8 +66,10 @@ class FeedbackController extends Controller
             ->join('customers', 'customers.id', '=', 'feedback.customer_id')
             ->join('accounts', 'accounts.id', '=', 'customers.account_id')
             ->select([
-                'feedback.id', 'date_request', 'date_response', 'title', 'rating',
-                'comment', 'feedback_status', 'customers.full_name', 'accounts.username', 'accounts.avatar'
+                'feedback.id', 'date_request', 'date_response', 'title', 'rating', 'comment', 'feedback_status',
+                'feedback.customer_id', 'customers.account_id', 'customers.full_name', 'accounts.email', 
+                'customers.gender', 'customers.birthday', 'customers.CMND', 'customers.address', 'customers.phone', 
+                'customers.ranking_point', 'accounts.username', 'accounts.avatar'
             ])
             ->get();
         return response()->json([
