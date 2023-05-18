@@ -67,4 +67,8 @@ class Employee extends Model
 
         return $this->belongsTo(Account::class);
     }
+        public function position()
+    {
+        return $this->belongsTo(Position::class);
+    }
 }
