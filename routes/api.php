@@ -27,8 +27,11 @@ Route::group([
     'middleware' => ['force.json.response', 'api'],
     'prefix' => 'auth'
 ], function ($router) {
+    
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    
+
 });
 
 // Auth API
@@ -48,6 +51,7 @@ Route::group([
     Route::patch('/accounts/{id}', [AccountController::class, 'updateAvatar']);
 
     // Room Types
+    // Route::get('/room-types', [RoomController::class, 'index']);
     Route::get('/room-types', [RoomController::class, 'index']);
     Route::get('/room-types/lowest-price', [RoomController::class, 'getLowestPrice']);
     Route::get('/room-types/highest-price', [RoomController::class, 'getHighestPrice']);
@@ -99,7 +103,7 @@ Route::group([
   Route::get('/{id}', [EmployeeController::class, 'show']);
   Route::get('/search/{search}', [EmployeeController::class, 'searchByParams']);
   Route::get('/find/{id}',[EmployeeController::class, 'employeeFindID']);
-  Route::post('/{id}', [EmployeeController::class, 'store']);
+  
   Route::patch('/{id}', [EmployeeController::class, 'update']);
 });
 
@@ -113,4 +117,6 @@ Route::group([
   Route::get('/search/{search}', [AdminController::class, 'searchByParams']);
   Route::get('/find/{id}',[AdminController::class, 'adminFindID']);
   Route::patch('/{id}',[AdminController::class, 'update']);
+  Route::post('/store', [EmployeeController::class, 'store']);
+ 
 });

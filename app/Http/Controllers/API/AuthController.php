@@ -46,10 +46,10 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'avatar' => $request->avatar,
-            'enabled' => $request->enabled,
-            'role_id' => $request->role_id
+            'enabled' => $request->enabled|'1',
+            'role_id' => $request->role_id|'3'
         ]);
-
+ 
         Customer::create([
             'ranking_point' => 0,
             'account_id' => $account->id,
@@ -85,7 +85,25 @@ class AuthController extends Controller
         }
 
         $credentials = request(['email', 'password']);
-        
+        $account = Account::where('email', $request->email)->first();
+
+        if (!$account) {
+            // Tài khoản không tồn tại
+            return response()->json([
+                'status_code' => 401,
+                'message' => 'Login failed!',
+                'error' => 'Unauthorized',
+            ], 401);
+        }
+
+        if ($account->enabled == 0) {
+            // Tài khoản bị vô hiệu hóa
+            return response()->json([
+                'status_code' => 401,
+                'message' => 'Login failed!',
+                'error' => 'Account is disabled',
+            ], 401);
+        }
         if (!$token = auth()->attempt($credentials)) {
             return response()->json([
                 'status_code' => 401,
