@@ -32,6 +32,7 @@ class AccountController extends Controller
 
     public function searchByUsername($username) {
         $accounts = Account::where('username', 'like', '%' . $username . '%')->get();
+        // $accounts = Account::where('')
 
         if (count($accounts) == 0) {
             return response()->json([
