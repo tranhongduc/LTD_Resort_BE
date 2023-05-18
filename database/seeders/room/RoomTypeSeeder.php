@@ -26,6 +26,8 @@ class RoomTypeSeeder extends Seeder
 
         $list_point_rankings = [200, 250, 300, 350, 400];
 
+        $room_type_count = 1;
+
         for ($i = 0; $i < count($bedroom_types); $i++) {
             for ($j = 0; $j < count($room_types); $j++) {
                 RoomType::factory()->create([
@@ -33,11 +35,12 @@ class RoomTypeSeeder extends Seeder
                     'room_size' => $room_sizes[$i],
                     'number_rooms' => $number_rooms[$i],
                     'number_customers' => $number_customers[$i],
-                    'description' => fake()->sentence(),
-                    'image' => 'gs://ltd-resort.appspot.com/room-types/' . $bedroom_types[$i] . ' ' . $room_types[$j] . '.jpg',
+                    'description' => fake()->paragraph(20),
+                    'image' => 'gs://ltd-resort.appspot.com/room-types/' . $room_type_count . '/',
                     'price' => $bedroom_types_price[$i] * $room_types_price[$j],
                     'point_ranking' => $list_point_rankings[$i]
                 ]);
+                $room_type_count++;
             }
         }
     }

@@ -8,8 +8,6 @@ use App\Models\user\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use App\Models\user\Account;
-use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
