@@ -112,74 +112,7 @@ class EmployeeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'full_name' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required',
-            'CMND' => 'required',
-            'address' => 'required',
-            'phone' => 'required',
-            'account_bank' => 'required',
-            'name_bank' => 'required',
-            'position_id' =>  'required|exists:positions,id'
-        ]);
-
-        if ($validator->fails()) {
-            $response = [
-                'status_code' => 400,
-                'message' => $validator->errors(),
-            ];
-            return response()->json($response, 400);
-        }
-
-        // $employee = Employee::create([
-        $data=[
-            'full_name' => $request->full_name,
-            'gender' => $request->gender,
-            'birthday' => $request->birthday,
-            'CMND' => $request->CMND,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'account_bank' => $request->account_bank,
-            'name_bank' => $request->name_bank,
-            'day_start' => Carbon::now($request->day_start),
-            'status' => $request->status | 1,
-            'position_id' => $request->position_id,
-        ];
-        // ]);
-
-
-        
-            $position = Position::find($data['position_id']);
-            if ($position->permission == '1') {
-                $accountData =[
-                    'username' => $request->username,
-                    'email' => $request->email,
-                    // 'password' => Hash::make(Str::random(8)),
-                    'password' => Str::random(8),
-                    'enabled' => $request->enabled | '1',
-                    'role_id' => $request->role_id | '2'
-                ];
-                
-                $account =Account::create($accountData);
-                $token = Auth::guard('api')->login($account);
-                $data['account_id'] = $account->id;
-            }else{
-                $data['account_id'] = null;
-            }
-            $employee = Employee::create($data);
-      
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Employee created Successfully',
-            'employee' => $employee,
-            
-        ]);
-    }
-
+    
     /**
      * Update the specified resource in storage.
      */

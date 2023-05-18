@@ -110,5 +110,5 @@ Route::group([
   Route::get('/find/{id}',[AdminController::class, 'adminFindID']);
   Route::patch('/{id}',[AdminController::class, 'update']);
   Route::post('/store', [EmployeeController::class, 'store']);
-  Route::patch('/quit-employee/{id}',[EmployeeController::class, 'quitEmployeeByID']);
+ 
 });
