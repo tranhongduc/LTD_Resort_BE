@@ -84,6 +84,7 @@ class EmployeeController extends Controller
                     "name" => $employee->full_name,
                     "gender" => $employee->gender,
                     "birthday" => $employee->birthday,
+                    "image"=> $employee->image,
                     "CMND" => $employee->CMND,
                     "address" => $employee->address,
                     "phone" => $employee->phone,
@@ -193,6 +194,7 @@ class EmployeeController extends Controller
             'birthday',
             'CMND',
             'address',
+            'image',
             'phone',
         ]);
 
@@ -211,6 +213,7 @@ class EmployeeController extends Controller
             $employee->CMND = $request->CMND;
             $employee->address = $request->address;
             $employee->phone = $request->phone;
+            $employee->image = $request->image;
             $employee->update();
             return response()->json([
                 'message' => 'Employee Updated Successfully',
