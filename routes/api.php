@@ -53,29 +53,43 @@ Route::group([
     // Room Types
     // Route::get('/room-types', [RoomController::class, 'index']);
     Route::get('/room-types', [RoomController::class, 'index']);
+    Route::get('/room-types/total/', [RoomController::class, 'getTotalRoomTypes']);
     Route::get('/room-types/lowest-price', [RoomController::class, 'getLowestPrice']);
     Route::get('/room-types/highest-price', [RoomController::class, 'getHighestPrice']);
     Route::get('/room-types/smallest-size', [RoomController::class, 'getSmallestRoomSize']);
     Route::get('/room-types/biggest-size', [RoomController::class, 'getBiggestRoomSize']);
     Route::get('/room-types/names', [RoomController::class, 'getListRoomTypeName']);
+    Route::get('/room-types/list-lowest-price', [RoomController::class, 'getTop5LowestPrice']);
     Route::get('/room-types/bedroom-names', [RoomController::class, 'getBedroomTypeNames']);
     Route::get('/room-types/room-names', [RoomController::class, 'getRoomTypeNames']);
     Route::post('/room-types/filter', [RoomController::class, 'filterRoomType']);
+    Route::post('/room-types/paginate/{page_number}/{num_of_page}', [RoomController::class, 'paging']);
     Route::get('/room-types/{id}', [RoomController::class, 'show']);
 
     // Services
     Route::get('/services', [ServiceController::class, 'index']);
+    Route::get('/services/total/', [ServiceController::class, 'getTotalServices']);
+    Route::get('/services/list-lowest-price', [ServiceController::class, 'getTop5LowestPrice']);
     Route::get('/services/lowest-price', [ServiceController::class, 'getLowestPrice']);
     Route::get('/services/highest-price', [ServiceController::class, 'getHighestPrice']);
     Route::get('/services/names', [ServiceController::class, 'getListServiceNames']);
     Route::post('/services/filter', [ServiceController::class, 'filterService']);
+    Route::post('/services/paginate/{page_number}/{num_of_page}', [ServiceController::class, 'paging']);
     Route::get('/services/{id}', [ServiceController::class, 'show']);
 
     // Feedbacks
     Route::get('/feedbacks', [FeedbackController::class, 'index']);
+    Route::get('/feedbacks/{id}/{type}/paginate/{page_number}/{num_of_page}', [FeedbackController::class, 'paging']); // id = room_type_id or service_id
     Route::get('/feedbacks/room', [FeedbackController::class, 'getAllFeedbackRooms']);
     Route::get('/feedbacks/service', [FeedbackController::class, 'getAllFeedbackServices']);
-    Route::get('/feedbacks/room-type/{id}', [FeedbackController::class, 'getFeedbackByRoomTypeId']);
+    Route::get('/feedbacks/average-rate/room/{room_type_id}', [FeedbackController::class, 'getAverageRatingByRoomTypeId']);
+    Route::get('/feedbacks/average-rate/service/{service_id}', [FeedbackController::class, 'getAverageRatingByServiceId']);
+    Route::get('/feedbacks/room-type/{room_type_id}', [FeedbackController::class, 'getFeedbackByRoomTypeId']);
+    Route::get('/feedbacks/service/{service_id}', [FeedbackController::class, 'getFeedbackByServiceId']);
+    Route::get('/feedbacks/room-type/total/{room_type_id}', [FeedbackController::class, 'getTotalFeedbacksByRoomTypeId']);
+    Route::get('/feedbacks/service/total/{service_id}', [FeedbackController::class, 'getTotalFeedbacksByServiceId']);
+    Route::get('/feedbacks/room-type/total-verified/{room_type_id}', [FeedbackController::class, 'getTotalVerifiedFeedbackByRoomTypeId']);
+    Route::get('/feedbacks/service/total-verified/{service_id}', [FeedbackController::class, 'getTotalVerifiedFeedbackByServiceId']);
     Route::get('/feedbacks/{id}', [FeedbackController::class, 'show']);
 });
 
