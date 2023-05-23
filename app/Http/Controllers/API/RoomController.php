@@ -243,6 +243,36 @@ class RoomController extends Controller
         ], 200);
     }
 
+    public function getTotalRoomTypes() {
+        $total_room_types = DB::table('room_types')->count();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'total_room_types' => $total_room_types,
+        ], 200);
+    }
+
+    public function getTotalNumerOfRoomByRoomTypeId($id) {
+        $number_of_rooms = DB::table('rooms')->where('room_type_id', '=', $id)->count();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'number_of_rooms' => $number_of_rooms,
+        ], 200);
+    }
+
+    public function getListRoomsByRoomTypeId($id) {
+        $list_rooms = DB::table('rooms')->where('room_type_id', '=', $id)->get();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'list_rooms' => $list_rooms,
+        ], 200);
+    }
+
     public function getLowestPrice()
     {
         $lowest_price = DB::table('room_types')->min('price');
@@ -343,6 +373,118 @@ class RoomController extends Controller
             'message' => 'Query successfully!',
             'status' => 200,
             'room_type_names' => $room_type_names
+        ]);
+    }
+
+    public function getTop5LowestPrice()
+    {
+        $list_lowest_price = DB::table('room_types')->orderBy('price', 'asc')->take(5)->get();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'list_lowest_price' => $list_lowest_price
+        ]);
+    }
+
+    public function paging(Request $request, $page_number, $num_of_page)
+    {
+        $data = [];
+
+        $list_filter_room_types = $request->input('list_filter_room_types');
+
+        if (count($list_filter_room_types) > 0) {
+            if (count($list_filter_room_types) % $num_of_page == 0) {
+                $page = count($list_filter_room_types) / $num_of_page;
+            } else {
+                $page = (int)(count($list_filter_room_types) / $num_of_page) + 1;
+            }
+
+            $start = ($page_number - 1) * $num_of_page;
+
+            if ($page_number == $page) {
+                for ($i = $start; $i < count($list_filter_room_types); $i++) {
+                    $data[] = [
+                        "id" => $list_filter_room_types[$i]['id'],
+                        "room_type_name" => $list_filter_room_types[$i]['room_type_name'],
+                        "room_size" => $list_filter_room_types[$i]['room_size'],
+                        "number_customers" => $list_filter_room_types[$i]['number_customers'],
+                        "description" => $list_filter_room_types[$i]['description'],
+                        "image" => $list_filter_room_types[$i]['image'],
+                        "price" => $list_filter_room_types[$i]['price'],
+                        "point_ranking" => $list_filter_room_types[$i]['point_ranking'],
+                        "created_at" => $list_filter_room_types[$i]['created_at'],
+                        "updated_at" => $list_filter_room_types[$i]['updated_at'],
+                    ];
+                }
+            } else if ($page_number > $page) {
+                $data = [];
+            } else {
+                for ($i = $start; $i < $start + $num_of_page; $i++) {
+                    $data[] = [
+                        "id" => $list_filter_room_types[$i]['id'],
+                        "room_type_name" => $list_filter_room_types[$i]['room_type_name'],
+                        "room_size" => $list_filter_room_types[$i]['room_size'],
+                        "number_customers" => $list_filter_room_types[$i]['number_customers'],
+                        "description" => $list_filter_room_types[$i]['description'],
+                        "image" => $list_filter_room_types[$i]['image'],
+                        "price" => $list_filter_room_types[$i]['price'],
+                        "point_ranking" => $list_filter_room_types[$i]['point_ranking'],
+                        "created_at" => $list_filter_room_types[$i]['created_at'],
+                        "updated_at" => $list_filter_room_types[$i]['updated_at'],
+                    ];
+                }
+            }
+        } else {
+            $list_room_types = DB::table('room_types')->get();
+            if (count($list_room_types) > 0) {
+                if (count($list_room_types) % $num_of_page == 0) {
+                    $page = count($list_room_types) / $num_of_page;
+                } else {
+                    $page = (int)(count($list_room_types) / $num_of_page) + 1;
+                }
+    
+                $start = ($page_number - 1) * $num_of_page;
+    
+                if ($page_number == $page) {
+                    for ($i = $start; $i < count($list_room_types); $i++) {
+                        $data[] = [
+                            "id" => $list_room_types[$i]->id,
+                            "room_type_name" => $list_room_types[$i]->room_type_name,
+                            "room_size" => $list_room_types[$i]->room_size,
+                            "number_customers" => $list_room_types[$i]->number_customers,
+                            "description" => $list_room_types[$i]->description,
+                            "image" => $list_room_types[$i]->image,
+                            "price" => $list_room_types[$i]->price,
+                            "point_ranking" => $list_room_types[$i]->point_ranking,
+                            "created_at" => $list_room_types[$i]->created_at,
+                            "updated_at" => $list_room_types[$i]->updated_at,
+                        ];
+                    }
+                } else if ($page_number > $page) {
+                    $data = [];
+                } else {
+                    for ($i = $start; $i < $start + $num_of_page; $i++) {
+                        $data[] = [
+                            "id" => $list_room_types[$i]->id,
+                            "room_type_name" => $list_room_types[$i]->room_type_name,
+                            "room_size" => $list_room_types[$i]->room_size,
+                            "number_customers" => $list_room_types[$i]->number_customers,
+                            "description" => $list_room_types[$i]->description,
+                            "image" => $list_room_types[$i]->image,
+                            "price" => $list_room_types[$i]->price,
+                            "point_ranking" => $list_room_types[$i]->point_ranking,
+                            "created_at" => $list_room_types[$i]->created_at,
+                            "updated_at" => $list_room_types[$i]->updated_at,
+                        ];
+                    }
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => 200,
+            'list_room_types' => $data,
         ]);
     }
 }

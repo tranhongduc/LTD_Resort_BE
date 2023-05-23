@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('room_type_name');
             $table->float('room_size');
-            $table->integer('number_rooms');
             $table->integer('number_customers');
             $table->text('description');
             $table->string('image')->nullable();

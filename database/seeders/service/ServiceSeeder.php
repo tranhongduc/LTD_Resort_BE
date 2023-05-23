@@ -49,7 +49,7 @@ class ServiceSeeder extends Seeder
                         Service::factory()->create([
                             'service_name' => $list_food_services[$j],
                             'image' => 'gs://ltd-resort.appspot.com/services/' . $service_count . '/',
-                            'description' => fake()->sentence(),
+                            'description' => fake()->sentence(20),
                             'status' => 'AVAILABLE',
                             'price' => 200000,
                             'point_ranking' => 200,
@@ -63,7 +63,7 @@ class ServiceSeeder extends Seeder
                         Service::factory()->create([
                             'service_name' => $list_entertainment_services[$j],
                             'image' => 'gs://ltd-resort.appspot.com/services/' . $service_count . '/',
-                            'description' => fake()->sentence(),
+                            'description' => fake()->sentence(20),
                             'status' => 'AVAILABLE',
                             'price' => 250000,
                             'point_ranking' => 250,
@@ -77,7 +77,7 @@ class ServiceSeeder extends Seeder
                         Service::factory()->create([
                             'service_name' => $list_wedding_party_services[$j],
                             'image' => 'gs://ltd-resort.appspot.com/services/' . $service_count . '/',
-                            'description' => fake()->sentence(),
+                            'description' => fake()->sentence(20),
                             'status' => 'AVAILABLE',
                             'price' => 500000,
                             'point_ranking' => 300,
@@ -91,7 +91,7 @@ class ServiceSeeder extends Seeder
                         Service::factory()->create([
                             'service_name' => $list_health_care_services[$j],
                             'image' => 'gs://ltd-resort.appspot.com/services/' . $service_count . '/',
-                            'description' => fake()->sentence(),
+                            'description' => fake()->sentence(20),
                             'status' => 'AVAILABLE',
                             'price' => 300000,
                             'point_ranking' => 250,
@@ -105,7 +105,7 @@ class ServiceSeeder extends Seeder
                         Service::factory()->create([
                             'service_name' => $list_local_travel_services[$j],
                             'image' => 'gs://ltd-resort.appspot.com/services/' . $service_count . '/',
-                            'description' => fake()->sentence(),
+                            'description' => fake()->sentence(20),
                             'status' => 'AVAILABLE',
                             'price' => 400000,
                             'point_ranking' => 300,

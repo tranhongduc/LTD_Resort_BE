@@ -18,14 +18,9 @@ class RoomTypeSeeder extends Seeder
 
         $bedroom_types_price = [200000, 240000, 250000, 300000, 350000];
         $room_types_price = [1.2, 1.4, 2, 2.5];
-
         $room_sizes = [20, 25, 30, 35, 40];
-
-        $number_rooms = [50, 40, 45, 30, 20];
         $number_customers = [1, 2, 2, 3, 4];
-
         $list_point_rankings = [200, 250, 300, 350, 400];
-
         $room_type_count = 1;
 
         for ($i = 0; $i < count($bedroom_types); $i++) {
@@ -33,7 +28,6 @@ class RoomTypeSeeder extends Seeder
                 RoomType::factory()->create([
                     'room_type_name' => $bedroom_types[$i] . ' - ' . $room_types[$j],
                     'room_size' => $room_sizes[$i],
-                    'number_rooms' => $number_rooms[$i],
                     'number_customers' => $number_customers[$i],
                     'description' => fake()->paragraph(20),
                     'image' => 'gs://ltd-resort.appspot.com/room-types/' . $room_type_count . '/',

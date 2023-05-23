@@ -33,10 +33,18 @@ class AuthController extends Controller
         ]);
 
         if($validator->fails()){
-            $response =[
+            $errors = $validator->errors();
+            
+            $response = [
                 'status_code' => 400,
-                'message' => $validator->errors(),
+                'message' => [
+                    'username' => $errors->first('username'),
+                    'email' => $errors->first('email'),
+                    'password' => $errors->first('password'),
+                    'confirm_password' => $errors->first('confirm_password'),
+                ],
             ];
+
             return response()->json($response,400);
         }
 
