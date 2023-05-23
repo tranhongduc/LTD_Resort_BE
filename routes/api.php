@@ -51,9 +51,10 @@ Route::group([
     Route::patch('/accounts/{id}', [AccountController::class, 'updateAvatar']);
 
     // Room Types
-    // Route::get('/room-types', [RoomController::class, 'index']);
     Route::get('/room-types', [RoomController::class, 'index']);
     Route::get('/room-types/total/', [RoomController::class, 'getTotalRoomTypes']);
+    Route::get('/room-types/total-rooms/{id}', [RoomController::class, 'getTotalNumerOfRoomByRoomTypeId']);
+    Route::get('/room-types/list-rooms/{id}', [RoomController::class, 'getListRoomsByRoomTypeId']);
     Route::get('/room-types/lowest-price', [RoomController::class, 'getLowestPrice']);
     Route::get('/room-types/highest-price', [RoomController::class, 'getHighestPrice']);
     Route::get('/room-types/smallest-size', [RoomController::class, 'getSmallestRoomSize']);

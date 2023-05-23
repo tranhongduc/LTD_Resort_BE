@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('service_name');
             $table->string('image')->nullable();
-            $table->string('description');
+            $table->text('description');
             $table->string('status');
             $table->float('price');
             $table->integer('point_ranking');

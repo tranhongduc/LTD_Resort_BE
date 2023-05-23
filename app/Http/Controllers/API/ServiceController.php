@@ -24,13 +24,13 @@ class ServiceController extends Controller
             return response()->json([
                 'message' => 'Query successfully!',
                 'status' => 200,
-                'room_type' => $service,
+                'service' => $service,
             ], 200);
         } else {
             return response()->json([
                 'message' => 'Data not found!',
                 'status' => 404,
-                'room_type' => $service,
+                'service' => $service,
             ], 404);
         }
     }

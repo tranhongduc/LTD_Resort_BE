@@ -5,10 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\room\RoomType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -255,6 +253,26 @@ class RoomController extends Controller
         ], 200);
     }
 
+    public function getTotalNumerOfRoomByRoomTypeId($id) {
+        $number_of_rooms = DB::table('rooms')->where('room_type_id', '=', $id)->count();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'number_of_rooms' => $number_of_rooms,
+        ], 200);
+    }
+
+    public function getListRoomsByRoomTypeId($id) {
+        $list_rooms = DB::table('rooms')->where('room_type_id', '=', $id)->get();
+
+        return response()->json([
+            'message' => 'Query successfully!',
+            'status' => 200,
+            'list_rooms' => $list_rooms,
+        ], 200);
+    }
+
     public function getLowestPrice()
     {
         $lowest_price = DB::table('room_types')->min('price');
@@ -390,7 +408,6 @@ class RoomController extends Controller
                         "id" => $list_filter_room_types[$i]['id'],
                         "room_type_name" => $list_filter_room_types[$i]['room_type_name'],
                         "room_size" => $list_filter_room_types[$i]['room_size'],
-                        "number_rooms" => $list_filter_room_types[$i]['number_rooms'],
                         "number_customers" => $list_filter_room_types[$i]['number_customers'],
                         "description" => $list_filter_room_types[$i]['description'],
                         "image" => $list_filter_room_types[$i]['image'],
@@ -408,7 +425,6 @@ class RoomController extends Controller
                         "id" => $list_filter_room_types[$i]['id'],
                         "room_type_name" => $list_filter_room_types[$i]['room_type_name'],
                         "room_size" => $list_filter_room_types[$i]['room_size'],
-                        "number_rooms" => $list_filter_room_types[$i]['number_rooms'],
                         "number_customers" => $list_filter_room_types[$i]['number_customers'],
                         "description" => $list_filter_room_types[$i]['description'],
                         "image" => $list_filter_room_types[$i]['image'],
@@ -436,7 +452,6 @@ class RoomController extends Controller
                             "id" => $list_room_types[$i]->id,
                             "room_type_name" => $list_room_types[$i]->room_type_name,
                             "room_size" => $list_room_types[$i]->room_size,
-                            "number_rooms" => $list_room_types[$i]->number_rooms,
                             "number_customers" => $list_room_types[$i]->number_customers,
                             "description" => $list_room_types[$i]->description,
                             "image" => $list_room_types[$i]->image,
@@ -454,7 +469,6 @@ class RoomController extends Controller
                             "id" => $list_room_types[$i]->id,
                             "room_type_name" => $list_room_types[$i]->room_type_name,
                             "room_size" => $list_room_types[$i]->room_size,
-                            "number_rooms" => $list_room_types[$i]->number_rooms,
                             "number_customers" => $list_room_types[$i]->number_customers,
                             "description" => $list_room_types[$i]->description,
                             "image" => $list_room_types[$i]->image,
