@@ -19,7 +19,7 @@ class AreaSeeder extends Seeder
         
         for ($i = 0; $i < NUMBER_OF_AREAS; $i++) {
             Area::factory()->create([
-                'area_name' => 'Khu' . ' ' . $areas_zone[$i]
+                'area_name' => 'Area' . ' ' . $areas_zone[$i]
             ]);
         }
     }

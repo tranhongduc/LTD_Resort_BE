@@ -1,14 +1,16 @@
 <?php
 
-use App\Http\Controllers\API\RoomController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\AccountController;
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AdminController;
+use App\Http\Controllers\API\AreaController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\FloorController;
+use App\Http\Controllers\API\RoomController;
+use App\Http\Controllers\API\RoomTypeController;
 use App\Http\Controllers\API\ServiceController;
 
 /*
@@ -50,22 +52,37 @@ Route::group([
     Route::get('/accounts/{id}', [AccountController::class, 'show']);
     Route::patch('/accounts/{id}', [AccountController::class, 'updateAvatar']);
 
+    // Areas
+    Route::get('/areas', [AreaController::class, 'index']);
+    Route::get('/areas/total', [AreaController::class, 'getTotalAreas']);
+    Route::get('/areas/{id}', [AreaController::class, 'show']);
+
+    // Floors
+    Route::get('/floors', [FloorController::class, 'index']);
+    Route::get('/floors/total', [FloorController::class, 'getTotalFloors']);
+    Route::get('/floors/{id}', [FloorController::class, 'show']);
+
+    // Rooms
+    Route::get('/room', [RoomController::class, 'index']);
+    Route::get('/room/room-type/{id}', [RoomController::class, 'getRoomsByRoomTypeId']);
+    Route::get('/room/{id}', [RoomController::class, 'show']);
+
     // Room Types
-    Route::get('/room-types', [RoomController::class, 'index']);
-    Route::get('/room-types/total/', [RoomController::class, 'getTotalRoomTypes']);
-    Route::get('/room-types/total-rooms/{id}', [RoomController::class, 'getTotalNumerOfRoomByRoomTypeId']);
-    Route::get('/room-types/list-rooms/{id}', [RoomController::class, 'getListRoomsByRoomTypeId']);
-    Route::get('/room-types/lowest-price', [RoomController::class, 'getLowestPrice']);
-    Route::get('/room-types/highest-price', [RoomController::class, 'getHighestPrice']);
-    Route::get('/room-types/smallest-size', [RoomController::class, 'getSmallestRoomSize']);
-    Route::get('/room-types/biggest-size', [RoomController::class, 'getBiggestRoomSize']);
-    Route::get('/room-types/names', [RoomController::class, 'getListRoomTypeName']);
-    Route::get('/room-types/list-lowest-price', [RoomController::class, 'getTop5LowestPrice']);
-    Route::get('/room-types/bedroom-names', [RoomController::class, 'getBedroomTypeNames']);
-    Route::get('/room-types/room-names', [RoomController::class, 'getRoomTypeNames']);
-    Route::post('/room-types/filter', [RoomController::class, 'filterRoomType']);
-    Route::post('/room-types/paginate/{page_number}/{num_of_page}', [RoomController::class, 'paging']);
-    Route::get('/room-types/{id}', [RoomController::class, 'show']);
+    Route::get('/room-types', [RoomTypeController::class, 'index']);
+    Route::get('/room-types/total/', [RoomTypeController::class, 'getTotalRoomTypes']);
+    Route::get('/room-types/total-rooms/{id}', [RoomTypeController::class, 'getTotalNumerOfRoomByRoomTypeId']);
+    Route::get('/room-types/list-rooms/{id}', [RoomTypeController::class, 'getListRoomsByRoomTypeId']);
+    Route::get('/room-types/lowest-price', [RoomTypeController::class, 'getLowestPrice']);
+    Route::get('/room-types/highest-price', [RoomTypeController::class, 'getHighestPrice']);
+    Route::get('/room-types/smallest-size', [RoomTypeController::class, 'getSmallestRoomSize']);
+    Route::get('/room-types/biggest-size', [RoomTypeController::class, 'getBiggestRoomSize']);
+    Route::get('/room-types/names', [RoomTypeController::class, 'getListRoomTypeName']);
+    Route::get('/room-types/list-lowest-price', [RoomTypeController::class, 'getTop5LowestPrice']);
+    Route::get('/room-types/bedroom-names', [RoomTypeController::class, 'getBedroomTypeNames']);
+    Route::get('/room-types/room-names', [RoomTypeController::class, 'getRoomTypeNames']);
+    Route::post('/room-types/filter', [RoomTypeController::class, 'filterRoomType']);
+    Route::post('/room-types/paginate/{page_number}/{num_of_page}', [RoomTypeController::class, 'paging']);
+    Route::get('/room-types/{id}', [RoomTypeController::class, 'show']);
 
     // Services
     Route::get('/services', [ServiceController::class, 'index']);
