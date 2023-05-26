@@ -179,4 +179,5 @@ class AuthController extends Controller
             'user' => array_merge(auth()->user()->toArray(), ['role_name' => $role_user]),
         ]);
     }
+    
 }

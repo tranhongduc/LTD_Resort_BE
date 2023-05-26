@@ -50,7 +50,95 @@ class EmployeeController extends Controller
             ]);
         }
     }
+    public function getEmployeeByAccountId()
+    { 
+        $user = auth()->user();
+        // Kiểm tra token hợp lệ và người dùng đã đăng nhập
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        } else {
+            $employee = DB::table('employees')->where('account_id', '=', $user->id)->first();
+           
+            if ($employee) {
+                $position = Position::find($employee->position_id);
+                if ($position) {
+                    $department = Department::find($position->department_id);
+    
+                    $data[] = [
+                        "avatar"=>$user->avatar,
+                        "username" => $user->username,
+                        "email"=> $user->email,
+                        "image"=> $employee->image,
+                        "name" => $employee->full_name,
+                        "gender" => $employee->gender,
+                        "birthday" => $employee->birthday,
+                        "CMND" => $employee->CMND,
+                        "address" => $employee->address,
+                        "phone" => $employee->phone,
+                        "account_bank" => $employee->account_bank,
+                        "name_bank" => $employee->name_bank,
+                        "day_start" => $employee->day_start,
+                        "position_name" => $position->position_name,
+                        "department_name" => $department->department_name
+                    ];
+    
+                return response()->json([
+                    'message' => 'Query successfully!',
+                    'status' => 200,
+                    'customer' => $data,
+                ], 200);
+                } else {
+                    return response()->json([
+                        'message' => 'Data not found!',
+                        'status' => 404,
+                    ], 404);
+                }
+            }
+        }
+    }
+    public function updateEmployeeByAccountId(Request $request)
+    {
+        $user = auth()->user();
+        // Kiểm tra token hợp lệ và người dùng đã đăng nhập
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $data = Account::find($user->id);
+        $employee = DB::table('employees')->where('account_id', '=', $user->id)->first();
+        $employeeModel = Employee::find($employee->id);
+        if($data && $employeeModel){
+            if ($request->avatar) {
+                $data->avatar = $request->avatar;
+                $data->update();
+            }
+            if ($request->address) {
+                $employeeModel->address = $request->address;
+            }
+            if ($request->phone) {
+                $employeeModel->phone = $request->phone;
+            }
+            if ($request->account_bank) {
+                $employeeModel->account_bank = $request->account_bank;
+            }
+            if ($request->name_bank) {
+                $employeeModel->name_bank = $request->name_bank;
+            }
 
+            $employeeModel->update();
+            return response()->json([
+                'message' => 'Update successfully!',
+                'status' => 200,
+                'data' => $data,
+                'customer' => $employeeModel,
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Data not found!',
+                'status' => 404,
+            ], 404);
+        }
+
+    }
     public function searchByParams($search)
     {
         if ($search) {
