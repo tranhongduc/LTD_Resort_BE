@@ -34,7 +34,7 @@ class RoomSeeder extends Seeder
                     for ($z = 0; $z < $number_rooms; $z++) {
                         Room::factory()->create([
                             'room_name' => $areas_zone . $list_floors[$j]->id . '0' . ($z + 1),
-                            'status' => fake()->boolean(90) ? 'AVAILABLE' : 'BOOKED',
+                            'status' => 0,
                             'room_type_id' => $k + 1,
                             'area_id' => $list_areas[$i]->id,
                             'floor_id' => $list_floors[$j]->id

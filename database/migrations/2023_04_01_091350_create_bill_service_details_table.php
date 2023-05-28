@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('bill_service_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('quantity');
             $table->float('amount');
             $table->date('book_time');
             $table->foreignId('service_id')->constrained('services');

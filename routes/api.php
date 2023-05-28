@@ -32,7 +32,8 @@ Route::group([
     
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    
+    Route::post('/reset-password/request', [AccountController::class, 'requestResetCode']);
+    Route::post('/reset-password', [AccountController::class, 'resetPassword']);
 
 });
 

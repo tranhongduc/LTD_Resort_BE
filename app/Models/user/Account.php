@@ -5,7 +5,6 @@ namespace App\Models\user;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -13,7 +12,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Account extends Authenticatable implements JWTSubject
 {
-    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
+    use HasFactory, HasApiTokens, Notifiable;
 
     /**
      * The table associated with the model.
@@ -33,7 +32,10 @@ class Account extends Authenticatable implements JWTSubject
         'password', 
         'avatar', 
         'enabled',
-        'role_id'
+        'role_id',
+        'reset_code',
+        'reset_code_expires_at',
+        'reset_code_attempts'
     ];
 
     /**
@@ -43,6 +45,9 @@ class Account extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
+        'reset_code',
+        'reset_code_expires_at',
+        'reset_code_attempts'
     ];
 
     // Rest omitted for brevity
