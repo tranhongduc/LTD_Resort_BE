@@ -169,6 +169,8 @@ Route::group([
   Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
 
 
+//   
+Route::post('/quit-employee/{id}', [EmployeeController::class, 'quitEmployeeByID']);
   Route::get('/list', [AdminController::class, 'index']);
   Route::get('/{id}',[AdminController::class, 'show']);
   Route::get('/search/{search}', [AdminController::class, 'searchByParams']);
