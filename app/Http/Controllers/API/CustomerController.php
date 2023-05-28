@@ -197,30 +197,98 @@ class CustomerController extends Controller
             ]);
         }
     }
-    public function searchByParams($search)
-    {
-        if ($search) {
-            $result  = Customer::where('full_name', 'LIKE', "%{$search}%")->get();
-
-            if (count($result) > 0) {
+    public function findBillByID($id)
+    {       
+            $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $id)->get();
+            $bill_service= DB::table('bill_services')->where('customer_id', '=', $id)->get();
+            $bill_extra_service= DB::table('bill_extra_services')->where('customer_id', '=', $id)->get();
+            if ($bill_room ->isEmpty() && $bill_service->isEmpty() && $bill_extra_service->isEmpty())  {
                 return response()->json([
-                    'message' => 'Query successfully!',
-                    'status' => 200,
-                    'data' => $result,
+                        'message' => 'Data not found!',
+                        'status' => 400,
                 ]);
             } else {
                 
                 return response()->json([
-                    'message' => 'Data not found!',
-                    'status' => 400,
-                    'data' => $result,
+                    'message' => 'Query successfully!',
+                    'status' => 200,
+                    'bill_room' => $bill_room,
+                    'bill_service'=>$bill_service,
+                    'bill_extra_service'=>$bill_extra_service,
                 ]);
             }
+    }
+    public function findHistoryBillCustomerByID()
+    {
+        $user = auth()->user();
+        // Kiểm tra token hợp lệ và người dùng đã đăng nhập
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $customer_id = DB::table('customers')->where('account_id', '=', $user->id)->value('id');
+        if($customer_id){
+            $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $customer_id)
+            ->whereNotNull('checkout_time')->get();
+            $bill_service= DB::table('bill_services')->where('customer_id', '=', $customer_id)
+            ->whereNotNull('checkin_time')->get();
+            $bill_extra_service= DB::table('bill_extra_services')->where('customer_id', '=', $customer_id)->get();
+            if ($bill_room ->isEmpty() && $bill_service->isEmpty() && $bill_extra_service->isEmpty())  {
+                return response()->json([
+                        'message' => 'Data not found!',
+                        'status' => 400,
+                ]);
+            } else {
+                
+                return response()->json([
+                    'message' => 'Query successfully!',
+                    'status' => 200,
+                    'bill_room' => $bill_room,
+                    'bill_service'=>$bill_service,
+                    'bill_extra_service'=>$bill_extra_service,
+                ]);
+            }
+        }else {
+            return response()->json([
+                'message' => 'Data not found by token!',
+                'status' => 404,
+            ], 404);
         }
     }
-    /**
-     * Update the specified resource in storage.
-     */
+    public function findBookBillCustomerByID()
+    {
+        $user = auth()->user();
+        // Kiểm tra token hợp lệ và người dùng đã đăng nhập
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $customer_id = DB::table('customers')->where('account_id', '=', $user->id)->value('id');
+        if($customer_id){
+            $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $customer_id)
+            ->whereNull('checkout_time')->get();
+            $bill_service= DB::table('bill_services')->where('customer_id', '=', $customer_id)
+            ->whereNull('checkin_time')->get();
+            if ($bill_room ->isEmpty() && $bill_service->isEmpty())  {
+                return response()->json([
+                        'message' => 'Data not found!',
+                        'status' => 400,
+                ]);
+            } else {
+                
+                return response()->json([
+                    'message' => 'Query successfully!',
+                    'status' => 200,
+                    'bill_room' => $bill_room,
+                    'bill_service'=>$bill_service,
+                ]);
+            }
+        }else {
+            return response()->json([
+                'message' => 'Data not found by token!',
+                'status' => 404,
+            ], 404);
+        }
+    }
+    
     public function getRankingNameByAccountId($id)
     {
         $customer_id = DB::table('customers')->where('account_id', '=', $id)->value('id');
@@ -234,3 +302,4 @@ class CustomerController extends Controller
         ], 200);
     }
 }
+

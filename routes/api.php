@@ -89,6 +89,8 @@ Route::group([
 //personal information
     Route::get('/account-customer', [CustomerController::class, 'getCustomerByAccountId']);
     Route::patch('/update-customer', [CustomerController::class, 'updateCutomerByAccountId']);
+    Route::get('/history-bill-customer', [CustomerController::class, 'findHistoryBillCustomerByID']);
+    Route::get('/book-bill-customer', [CustomerController::class, 'findBookBillCustomerByID']);
 
     Route::get('/ranking/{account_id}', [CustomerController::class, 'getRankingNameByAccountId']);
     Route::get('/search/{search}', [CustomerController::class, 'searchByParams']);
@@ -109,7 +111,8 @@ Route::group([
   Route::get('/list-customer', [CustomerController::class, 'index']);
   Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
   Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
-  
+  Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
+
   Route::get('/list', [EmployeeController::class, 'index']);
   Route::get('/{id}', [EmployeeController::class, 'show']);
   Route::get('/search/{search}', [EmployeeController::class, 'searchByParams']);
@@ -131,7 +134,9 @@ Route::group([
   Route::get('/list-customer', [CustomerController::class, 'index']);
   Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
   Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
-  
+  Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
+
+
   Route::get('/list', [AdminController::class, 'index']);
   Route::get('/{id}',[AdminController::class, 'show']);
   Route::get('/search/{search}', [AdminController::class, 'searchByParams']);

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('bill_service_details', function (Blueprint $table) {
             $table->id();
             $table->float('amount');
-            $table->integer('quantity');
+            $table->date('book_time');
             $table->foreignId('service_id')->constrained('services');
             $table->foreignId('bill_service_id')->constrained('bill_services');
             $table->timestamps();
