@@ -22,8 +22,8 @@ class BillServiceDetail extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'quantity',
         'amount',
+        'book_time',
         'service_id',
         'bill_service_id',
     ];

@@ -27,6 +27,7 @@ class BillRoom extends Model
         'total_people',
         'payment_method',
         'pay_time',
+        'checkin_time',
         'checkout_time',
         'cancel_time',
         'tax',

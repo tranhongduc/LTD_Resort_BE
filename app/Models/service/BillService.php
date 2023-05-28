@@ -25,6 +25,7 @@ class BillService extends Model
         'total_amount',
         'payment_method',
         'pay_time',
+        'checkin_time',
         'cancel_time',
         'tax',
         'discount',
