@@ -17,14 +17,14 @@ return new class extends Migration
             $table->integer('total_room');
             $table->integer('total_people');
             $table->string('payment_method');
-            $table->date('pay_time');
-            $table->date('checkin_time')->nullable();
-            $table->date('checkout_time')->nullable();
-            $table->date('cancel_time')->nullable();
+            $table->dateTime('pay_time');
+            $table->dateTime('checkin_time')->nullable();
+            $table->dateTime('checkout_time')->nullable();
+            $table->dateTime('cancel_time')->nullable();
             $table->float('tax');
             $table->float('discount');
             $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('employee_id')->nullable()->constrained('employees');
             $table->timestamps();
         });
     }

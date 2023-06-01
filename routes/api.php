@@ -7,6 +7,8 @@ use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AreaController;
+use App\Http\Controllers\API\BillRoomController;
+use App\Http\Controllers\API\BillServiceController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\FloorController;
 use App\Http\Controllers\API\RoomController;
@@ -46,13 +48,9 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/me', [AuthController::class, 'me']);
-
-    // Account
-    // Route::get('/accounts', [AccountController::class, 'index']);
-    // Route::get('/accounts/search/{username}', [AccountController::class, 'searchByUsername']);
-    // Route::get('/accounts/{id}', [AccountController::class, 'show']);
     Route::patch('/changePassword', [AccountController::class, 'changePassword']);
-
+   //BillRoomDetail
+    Route::get('/show-bill-room-detail/{id}', [BillRoomController::class, 'findBillRoomDetail']);
     // Areas
     Route::get('/areas', [AreaController::class, 'index']);
     Route::get('/areas/total', [AreaController::class, 'getTotalAreas']);
@@ -145,6 +143,16 @@ Route::group([
   Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
   Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
   Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
+  Route::get('/get-total-amount/{id}', [CustomerController::class, 'getTotalAmount']);
+//bill room
+  Route::get('/list-bill-room', [BillRoomController::class, 'findBillRoom']);
+  Route::get('/list-history-room', [BillRoomController::class, 'findHistoryRoom']);
+  Route::get('/list-cancel-room', [BillRoomController::class, 'findCancelRoom']);
+//bill service
+  Route::get('/list-bill-service', [BillServiceController::class, 'findBillService']);
+  Route::get('/list-history-service', [BillServiceController::class, 'findHistoryService']);
+  Route::get('/list-cancel-service', [BillServiceController::class, 'findCancelService']);
+
 
   Route::get('/list', [EmployeeController::class, 'index']);
   Route::get('/{id}', [EmployeeController::class, 'show']);
@@ -168,7 +176,7 @@ Route::group([
   Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
   Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
   Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
-
+  Route::get('/get-total-amount/{id}', [CustomerController::class, 'getTotalAmount']);
 
 //   
 Route::post('/quit-employee/{id}', [EmployeeController::class, 'quitEmployeeByID']);

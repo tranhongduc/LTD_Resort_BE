@@ -2,6 +2,7 @@
 
 namespace App\Models\room;
 
+use App\Models\user\Customer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,4 +36,8 @@ class BillRoom extends Model
         'customer_id',
         'employee_id',
     ];
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 }

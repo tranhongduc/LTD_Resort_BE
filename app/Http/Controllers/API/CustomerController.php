@@ -147,7 +147,7 @@ class CustomerController extends Controller
 
         // Tìm kiếm theo tên
         if ($request->has('full_name')) {
-            $full_name = $request->full_name;
+            $full_name = $request->full_nadme;
             $query->where('full_name', 'LIKE', '%' . $full_name . '%');
         }
 
@@ -199,8 +199,10 @@ class CustomerController extends Controller
     }
     public function findBillByID($id)
     {       
-            $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $id)->get();
-            $bill_service= DB::table('bill_services')->where('customer_id', '=', $id)->get();
+            $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $id)
+            ->whereNotNull('pay_time')->get();
+            $bill_service= DB::table('bill_services')->where('customer_id', '=', $id)
+            ->whereNotNull('pay_time')->get();
             $bill_extra_service= DB::table('bill_extra_services')->where('customer_id', '=', $id)->get();
             if ($bill_room ->isEmpty() && $bill_service->isEmpty() && $bill_extra_service->isEmpty())  {
                 return response()->json([
@@ -208,16 +210,48 @@ class CustomerController extends Controller
                         'status' => 400,
                 ]);
             } else {
-                
+                $data=[];
+                foreach ($bill_room as $item) {
+                    $time = DB::table('reservation_rooms')->where('bill_room_id', '=', $item->id)->first();
+                    $data[]=[
+                        'total_amount' => $item->total_amount,
+                        'total_people' => $item->total_people,
+                        'payment_method'=>$item->payment_method,
+                        'pay_time'=>$item->pay_time,
+                        'tax'=>$item->tax,
+                        'discount'=>$item->discount,
+                        'time_start' => $time->time_start,
+                        'time_end' => $time->time_end,
+                        'code'=>$item->id,
+                    ];
+                }
+                $data1=[];
+                foreach ($bill_service as $item1) {
+                    $service = DB::table('services')->where('id', '=', $item1->service_id)->first();
+                    $service_type= DB::table('service_types')->where('id', '=', $service->service_type_id)->first();
+                    $data1[]=[
+                        'quantity'=> $item1->quantity,
+                        'total_amount' => $item1->total_amount,
+                        'book_time' => $item1->book_time,
+                        'payment_method'=>$item1->payment_method,
+                        'pay_time'=>$item1->pay_time,
+                        'tax'=>$item1->tax,
+                        'discount'=>$item1->discount,
+                        'service'=>$service->service_name,
+                        'service_type'=>$service_type->service_type_name,
+                        'code'=>$item1->id,
+                    ];    
+                }
                 return response()->json([
                     'message' => 'Query successfully!',
                     'status' => 200,
-                    'bill_room' => $bill_room,
-                    'bill_service'=>$bill_service,
+                    'bill_room' => $data,
+                    'bill_service'=>$data1,
                     'bill_extra_service'=>$bill_extra_service,
                 ]);
             }
     }
+
     public function findHistoryBillCustomerByID()
     {
         $user = auth()->user();
@@ -239,15 +273,46 @@ class CustomerController extends Controller
                 ]);
             } else {
                 
+                $data=[];
+                foreach ($bill_room as $item) {
+                    $time = DB::table('reservation_rooms')->where('bill_room_id', '=', $item->id)->first();
+                    $data[]=[
+                        'total_amount' => $item->total_amount,
+                        'total_people' => $item->total_people,
+                        'payment_method'=>$item->payment_method,
+                        'pay_time'=>$item->pay_time,
+                        'tax'=>$item->tax,
+                        'discount'=>$item->discount,
+                        'time_start' => $time->time_start,
+                        'time_end' => $time->time_end,
+                        'code'=>$item->id,
+                    ];}
+                    $data1=[];
+                    foreach ($bill_service as $item1) {
+                        $service = DB::table('services')->where('id', '=', $item1->service_id)->first();
+                        $service_type= DB::table('service_types')->where('id', '=', $service->service_type_id)->first();
+                        $data1[]=[
+                            'quantity'=> $item1->quantity,
+                            'total_amount' => $item1->total_amount,
+                            'book_time' => $item1->book_time,
+                            'payment_method'=>$item1->payment_method,
+                            'pay_time'=>$item1->pay_time,
+                            'tax'=>$item1->tax,
+                            'discount'=>$item1->discount,
+                            'service'=>$service->service_name,
+                            'service_type'=>$service_type->service_type_name,
+                            'code'=>$item1->id,
+                        ];    
+                }
                 return response()->json([
                     'message' => 'Query successfully!',
                     'status' => 200,
-                    'bill_room' => $bill_room,
-                    'bill_service'=>$bill_service,
+                    'bill_room' => $data,
+                    'bill_service'=>$data1,
                     'bill_extra_service'=>$bill_extra_service,
                 ]);
             }
-        }else {
+          }else {
             return response()->json([
                 'message' => 'Data not found by token!',
                 'status' => 404,
@@ -264,8 +329,10 @@ class CustomerController extends Controller
         $customer_id = DB::table('customers')->where('account_id', '=', $user->id)->value('id');
         if($customer_id){
             $bill_room = DB::table('bill_rooms')->where('customer_id', '=', $customer_id)
+            ->whereNotNull('pay_time')
             ->whereNull('checkout_time')->get();
             $bill_service= DB::table('bill_services')->where('customer_id', '=', $customer_id)
+            ->whereNotNull('pay_time')
             ->whereNull('checkin_time')->get();
             if ($bill_room ->isEmpty() && $bill_service->isEmpty())  {
                 return response()->json([
@@ -274,13 +341,46 @@ class CustomerController extends Controller
                 ]);
             } else {
                 
+                $data=[];
+                foreach ($bill_room as $item) {
+                    $time = DB::table('reservation_rooms')->where('bill_room_id', '=', $item->id)->first();
+                    $data[]=[
+                        'total_amount' => $item->total_amount,
+                        'total_people' => $item->total_people,
+                        'payment_method'=>$item->payment_method,
+                        'pay_time'=>$item->pay_time,
+                        'tax'=>$item->tax,
+                        'discount'=>$item->discount,
+                        'time_start' => $time->time_start,
+                        'time_end' => $time->time_end,
+                        'code'=>$item->id,
+                    ];}
+                    $data1=[];
+                    foreach ($bill_service as $item1) {
+                        $service = DB::table('services')->where('id', '=', $item1->service_id)->first();
+                        $service_type= DB::table('service_types')->where('id', '=', $service->service_type_id)->first();
+                        $data1[]=[
+                            'quantity'=> $item1->quantity,
+                            'total_amount' => $item1->total_amount,
+                            'book_time' => $item1->book_time,
+                            'payment_method'=>$item1->payment_method,
+                            'pay_time'=>$item1->pay_time,
+                            'tax'=>$item1->tax,
+                            'discount'=>$item1->discount,
+                            'service'=>$service->service_name,
+                            'service_type'=>$service_type->service_type_name,
+                            'code'=>$item1->id,
+                        ];    
+                }
                 return response()->json([
                     'message' => 'Query successfully!',
                     'status' => 200,
-                    'bill_room' => $bill_room,
-                    'bill_service'=>$bill_service,
+                    'bill_room' => $data,
+                    'bill_service'=>$data1,
+                 
                 ]);
             }
+            
         }else {
             return response()->json([
                 'message' => 'Data not found by token!',
@@ -288,7 +388,29 @@ class CustomerController extends Controller
             ], 404);
         }
     }
-    
+    public function getTotalAmount($id)
+    {
+        $totalAmount = 0;
+
+        // Tính tổng total_amount của bảng bill_room
+        $billRooms = DB::table('bill_rooms')->where('customer_id', '=', $id)
+            ->whereNotNull('pay_time')
+            ->get();
+        $totalAmount += $billRooms->sum('total_amount');
+
+        // Tính tổng total_amount của bảng bill_service
+        $billServices = DB::table('bill_services')->where('customer_id', '=', $id)
+            ->whereNotNull('pay_time')
+            ->get();
+        $totalAmount += $billServices->sum('total_amount');
+
+        // Tính tổng total_amount của bảng bill_extra_service
+        $billExtraServices =DB::table('bill_extra_services')->where('customer_id', '=', $id)->get();
+        $totalAmount += $billExtraServices->sum('total_amount');
+
+        return response()->json(['total_amount' => $totalAmount]);
+    }
+
     public function getRankingNameByAccountId($id)
     {
         $customer_id = DB::table('customers')->where('account_id', '=', $id)->value('id');

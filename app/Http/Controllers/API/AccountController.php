@@ -176,8 +176,10 @@ class AccountController extends Controller
         if ($request->code !== $user->reset_code) {
             $user->reset_code_attempts++;
             $user->save();
-
-            return response()->json(['message' => 'Invalid reset code'], 400);
+            $attemptsLeft = 5 - $user->reset_code_attempts;
+            return response()->json([
+            'message' => 'Invalid reset code',
+            'your remaining password attempts are' =>$attemptsLeft  ], 400);
         }
 
         // Cập nhật mật khẩu mới và xóa mã code
