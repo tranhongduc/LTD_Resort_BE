@@ -44,10 +44,7 @@ class Account extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
     ];
-    public function customer()
-    {
-    return $this->belongsTo(Customer::class);
-    }
+
     // Rest omitted for brevity
 
     /**
@@ -97,4 +94,16 @@ class Account extends Authenticatable implements JWTSubject
 
     //     return $this->belongsTo(Account::class, 'account_id', 'account_id');
     // }
+    public function customer()
+    {
+    return $this->hasOne(Customer::class);
+    }
+    public function employee()
+    {
+    return $this->hasOne(Employee::class);
+    }
+    public function admin()
+    {
+    return $this->hasOne(Admin::class);
+    }
 }

@@ -17,7 +17,7 @@ class FloorSeeder extends Seeder
 
         for ($i = 0; $i < NUMBER_OF_FLOORS; $i++) {
             Floor::factory()->create([
-                'floor_name' => 'Tầng' . ' ' . $i + 1
+                'floor_name' => 'Floor' . ' ' . $i + 1
             ]);
         }
     }

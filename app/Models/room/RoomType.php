@@ -24,7 +24,6 @@ class RoomType extends Model
     protected $fillable = [
         'room_type_name',
         'room_size',
-        'number_rooms',
         'number_customers',
         'description',
         'image',

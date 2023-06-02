@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('room_name');
             $table->string('status');
-            $table->foreignId('feedback_id')->constrained('feedback');
             $table->foreignId('area_id')->constrained('areas');
             $table->foreignId('floor_id')->constrained('floors');
             $table->foreignId('room_type_id')->constrained('room_types');

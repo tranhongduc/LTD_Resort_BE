@@ -2,7 +2,6 @@
 
 namespace Database\Seeders\room;
 
-
 use App\Models\room\Room;
 use App\Models\Feedback;
 use App\Models\room\Area;
@@ -21,28 +20,28 @@ class RoomSeeder extends Seeder
         $area_model = new Area();
         $floor_model = new Floor();
         $room_type_model = new RoomType();
-        $feedback_model = new Feedback();
 
         $list_areas = $area_model->newQuery()->get();
         $list_floors = $floor_model->newQuery()->get();
-        $list_room_types_id = $room_type_model->newQuery()->get('id');
-        $list_feedback_id = $feedback_model->newQuery()->get('id');
-
-        $areas_zone = ['A', 'B', 'C', 'D', 'E', 'F', 'H'];
-
+        $list_room_types_id = $room_type_model->newQuery()->get();
+        $number_room_in_floor = [1, 2, 3];
 
         for($i = 0; $i < count($list_areas); $i++) {
+            $areas_zone = substr($list_areas[$i]->area_name, -1);
             for ($j = 0; $j < count($list_floors); $j++) {
-                Room::factory()->create([
-                    'room_name' => $areas_zone[$i] . '00' . $list_floors[$j]->id,
-                    'status' => fake()->boolean(90) ? 'AVAILABLE' : 'BOOKED',
-                    'feedback_id' => fake()->randomElement($list_feedback_id),
-                    'room_type_id' => fake()->randomElement($list_room_types_id),
-                    'area_id' => $list_areas[$i]->id,
-                    'floor_id' => $list_floors[$i]->id
-                ]);
+                for ($k = 0; $k < count($list_room_types_id); $k++) {
+                    $number_rooms = fake()->randomElement($number_room_in_floor);
+                    for ($z = 0; $z < $number_rooms; $z++) {
+                        Room::factory()->create([
+                            'room_name' => $areas_zone . $list_floors[$j]->id . '0' . ($z + 1),
+                            'status' => fake()->boolean(90) ? 'AVAILABLE' : 'BOOKED',
+                            'room_type_id' => $k + 1,
+                            'area_id' => $list_areas[$i]->id,
+                            'floor_id' => $list_floors[$j]->id
+                        ]);
+                    }
+                }
             }
         }
-
     }
 }

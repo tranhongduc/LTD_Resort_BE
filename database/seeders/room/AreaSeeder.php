@@ -13,13 +13,13 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
-        define('NUMBER_OF_AREAS', 7);
+        $areas_zone = ['A', 'B', 'C'];
 
-        $areas_zone = ['A', 'B', 'C', 'D', 'E', 'F', 'H'];
+        define('NUMBER_OF_AREAS', count($areas_zone));
         
         for ($i = 0; $i < NUMBER_OF_AREAS; $i++) {
             Area::factory()->create([
-                'area_name' => 'Khu' . ' ' . $areas_zone[$i]
+                'area_name' => 'Area' . ' ' . $areas_zone[$i]
             ]);
         }
     }

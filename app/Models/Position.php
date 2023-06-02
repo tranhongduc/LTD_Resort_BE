@@ -25,4 +25,9 @@ class Position extends Model
         'position_name',
         'permission'
     ];
+    public function employee()
+    {
+       
+        return $this->hasMany(Account::class);
+    }
 }
