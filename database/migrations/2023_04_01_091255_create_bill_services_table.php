@@ -13,14 +13,18 @@ return new class extends Migration
     {
         Schema::create('bill_services', function (Blueprint $table) {
             $table->id();
+            $table->integer('quantity');
             $table->float('total_amount');
+            $table->date('book_time');
             $table->string('payment_method');
-            $table->date('pay_time');
-            $table->date('cancel_time');
+            $table->dateTime('pay_time');
+            $table->dateTime('checkin_time')->nullable();
+            $table->dateTime('cancel_time')->nullable();
             $table->float('tax');
             $table->float('discount');
+            $table->foreignId('service_id')->constrained('services');
             $table->foreignId('customer_id')->constrained('customers');
-            $table->foreignId('employee_id')->constrained('employees');
+            $table->foreignId('employee_id')->nullable()->constrained('employees');
             $table->timestamps();
         });
     }

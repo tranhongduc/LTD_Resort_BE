@@ -7,6 +7,8 @@ use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\EmployeeController;
 use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AreaController;
+use App\Http\Controllers\API\BillRoomController;
+use App\Http\Controllers\API\BillServiceController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\FloorController;
 use App\Http\Controllers\API\RoomController;
@@ -32,7 +34,8 @@ Route::group([
     
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
-    
+    Route::post('/reset-password/request', [AccountController::class, 'requestResetCode']);
+    Route::post('/reset-password', [AccountController::class, 'resetPassword']);
 
 });
 
@@ -45,13 +48,9 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/me', [AuthController::class, 'me']);
-
-    // Account
-    Route::get('/accounts', [AccountController::class, 'index']);
-    Route::get('/accounts/search/{username}', [AccountController::class, 'searchByUsername']);
-    Route::get('/accounts/{id}', [AccountController::class, 'show']);
-    Route::patch('/accounts/{id}', [AccountController::class, 'updateAvatar']);
-
+    Route::patch('/changePassword', [AccountController::class, 'changePassword']);
+   //BillRoomDetail
+    Route::get('/show-bill-room-detail/{id}', [BillRoomController::class, 'findBillRoomDetail']);
     // Areas
     Route::get('/areas', [AreaController::class, 'index']);
     Route::get('/areas/total', [AreaController::class, 'getTotalAreas']);
@@ -116,12 +115,17 @@ Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.customer'],
     'prefix' => 'customer',
 ], function ($router) {
-    Route::get('/list', [CustomerController::class, 'index']);
-    Route::get('/{id}', [CustomerController::class, 'show']);
-    Route::get('/account/{account_id}', [CustomerController::class, 'getCustomerByAccountId']);
+    // Route::get('/list', [CustomerController::class, 'index']);
+    // Route::get('/{id}', [CustomerController::class, 'show']);
+//personal information
+    Route::get('/account-customer', [CustomerController::class, 'getCustomerByAccountId']);
+    Route::patch('/update-customer', [CustomerController::class, 'updateCutomerByAccountId']);
+    Route::get('/history-bill-customer', [CustomerController::class, 'findHistoryBillCustomerByID']);
+    Route::get('/book-bill-customer', [CustomerController::class, 'findBookBillCustomerByID']);
+
     Route::get('/ranking/{account_id}', [CustomerController::class, 'getRankingNameByAccountId']);
     Route::get('/search/{search}', [CustomerController::class, 'searchByParams']);
-    Route::get('/search/{id}', [CustomerController::class, 'customerFindID']);
+    
     Route::patch('/{id}', [CustomerController::class, 'update']);
     Route::patch('/account/{account_id}', [CustomerController::class, 'updateByAccountId']);
 });
@@ -131,6 +135,25 @@ Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.employee'],
     'prefix' => 'employee',
 ], function ($router) {
+// personal information
+  Route::get('/account-employee', [EmployeeController::class, 'getEmployeeByAccountId']);
+  Route::patch('/update-employee', [EmployeeController::class, 'updateEmployeeByAccountId']);
+// customer  
+  Route::get('/list-customer', [CustomerController::class, 'index']);
+  Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
+  Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
+  Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
+  Route::get('/get-total-amount/{id}', [CustomerController::class, 'getTotalAmount']);
+//bill room
+  Route::get('/list-bill-room', [BillRoomController::class, 'findBillRoom']);
+  Route::get('/list-history-room', [BillRoomController::class, 'findHistoryRoom']);
+  Route::get('/list-cancel-room', [BillRoomController::class, 'findCancelRoom']);
+//bill service
+  Route::get('/list-bill-service', [BillServiceController::class, 'findBillService']);
+  Route::get('/list-history-service', [BillServiceController::class, 'findHistoryService']);
+  Route::get('/list-cancel-service', [BillServiceController::class, 'findCancelService']);
+
+
   Route::get('/list', [EmployeeController::class, 'index']);
   Route::get('/{id}', [EmployeeController::class, 'show']);
   Route::get('/search/{search}', [EmployeeController::class, 'searchByParams']);
@@ -140,10 +163,23 @@ Route::group([
 });
 
 // Admin API
+
 Route::group([
     'middleware' => ['force.json.response', 'api', 'api.auth', 'auth.admin'],
     'prefix' => 'admin',
 ], function ($router) {
+    // personal information
+  Route::get('/account-admin', [AdminController::class, 'getAdminByAccountId']);
+  Route::patch('/update-admin', [AdminController::class, 'updateAdminByAccountId']); 
+  // Cutomer
+  Route::get('/list-customer', [CustomerController::class, 'index']);
+  Route::get('/show-customer/{id}', [CustomerController::class, 'ShowCustomerByID']);
+  Route::get('/find-customer/find', [CustomerController::class, 'findCustomer']);
+  Route::get('/show-bill-customer/{id}', [CustomerController::class, 'findBillByID']);
+  Route::get('/get-total-amount/{id}', [CustomerController::class, 'getTotalAmount']);
+
+//   
+Route::post('/quit-employee/{id}', [EmployeeController::class, 'quitEmployeeByID']);
   Route::get('/list', [AdminController::class, 'index']);
   Route::get('/{id}',[AdminController::class, 'show']);
   Route::get('/search/{search}', [AdminController::class, 'searchByParams']);
